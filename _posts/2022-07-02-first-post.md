@@ -1,6 +1,18 @@
-## 来自本人的第一篇博文
+---
 
-> fork的b站up tom还在写代码的仓库，免费github支持
+layout: post
+
+title: 我的第一篇博文
+
+categories: [blog]
+
+tags: [life]
+
+description: 
+
+---
+
+
 
 先尝试一下好不好用，用typora加上阿里云OSS图床和PicGo。
 
