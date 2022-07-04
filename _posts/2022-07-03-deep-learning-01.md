@@ -6,7 +6,7 @@ title: 邱锡鹏《神经网络与深度学习》01
 
 categories: [blog]
 
-tags: [deeplearing]
+tags: [deeplearning]
 
 description: 
 
