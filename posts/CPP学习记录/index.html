@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Jekyll v4.3.1">
+<meta property="og:title" content="C++学习笔记">
+<meta property="og:locale" content="zh_CN">
+<meta name="description" content="函数高级">
+<meta property="og:description" content="函数高级">
+<link rel="canonical" href="/posts/CPP%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">
+<meta property="og:url" content="/posts/CPP%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">
+<meta property="og:site_name" content="FZJ">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-08-01T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="C++学习笔记">
+<meta name="twitter:site" content="@twitter_username"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-08-01T00:00:00+00:00","datePublished":"2022-08-01T00:00:00+00:00","description":"函数高级","headline":"C++学习笔记","mainEntityOfPage":{"@type":"WebPage","@id":"/posts/CPP%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"},"url":"/posts/CPP%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"}</script><title>C++学习笔记 | FZJ</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
+<link rel="manifest" href="/assets/img/favicons/site.webmanifest">
+<link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
+<meta name="apple-mobile-web-app-title" content="FZJ">
+<meta name="application-name" content="FZJ">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato&family=Source+Sans+Pro:wght@400;600;700;900&amp;display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css">
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get MODE_ATTR() { return "data-mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } static get ID() { return "mode-toggle"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } let self = this; /* always follow the system prefers */ this.sysDarkPrefers.addEventListener("change", () => { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.notify(); }); } /* constructor() */ get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode === ModeToggle.DARK_MODE; } get isLightMode() { return this.mode === ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer)) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } setDark() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_ATTR); sessionStorage.removeItem(ModeToggle.MODE_KEY); } /* Notify another plugins that the theme mode has changed */ notify() { window.postMessage({ direction: ModeToggle.ID, message: this.modeStatus }, "*"); } } /* ModeToggle */ const toggle = new ModeToggle(); function flipMode() { if (toggle.hasMode) { if (toggle.isSysDarkPrefer) { if (toggle.isLightMode) { toggle.clearMode(); } else { toggle.setLight(); } } else { if (toggle.isDarkMode) { toggle.clearMode(); } else { toggle.setDark(); } } } else { if (toggle.isSysDarkPrefer) { toggle.setLight(); } else { toggle.setDark(); } } toggle.notify(); } /* flipMode() */ </script>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body data-spy="scroll" data-target="#toc" data-topbar-visible="true">
+<div id="sidebar" class="d-flex flex-column align-items-end">
+<div class="profile-wrapper text-center">
+<div id="avatar"> <a href="/" class="mx-auto"> <img src="/assets/config/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a>
+</div>
+<div class="site-title"> <a href="/">FZJ</a>
+</div>
+<div class="site-subtitle font-italic">这里是FZJ的博客～</div>
+</div>
+<ul class="w-100">
+<li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>首页</span> </a>
+</li>
+<li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>分类</span> </a>
+</li>
+<li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>标签</span> </a>
+</li>
+<li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>归档</span> </a>
+</li>
+<li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3 unloaded"></i> <span>关于</span> </a>
+</li>
+</ul>
+<div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center align-items-center"> <button class="mode-toggle btn" aria-label="Switch Mode"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/FZJJJ" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github"></i> </a> <a href="https://twitter.com/twitter_username" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href="javascript:location.href%20=%20'mailto:'%20+%20%5B'2919839271','qq.com'%5D.join('@')" aria-label="email"> <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss"> <i class="fas fa-rss"></i> </a>
+</div>
+</div>
+<div id="topbar-wrapper"><div id="topbar" class="container d-flex align-items-center justify-content-between h-100 pl-3 pr-3 pl-md-4 pr-md-4"> <span id="breadcrumb"> <span> <a href="/"> 首页 </a> </span> <span>C++学习笔记</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> 文章</div>
+<i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="搜索..."> </span> <span id="search-cancel">取消</span>
+</div></div>
+<div id="main-wrapper" class="d-flex justify-content-center">
+<div id="main" class="container pl-xl-4 pr-xl-4">
+<div class="row">
+<div id="core-wrapper" class="col-12 col-lg-11 col-xl-9 pr-xl-4"><div class="post pl-1 pr-1 pl-md-2 pr-md-2">
+<h1 data-toc-skip>C++学习笔记</h1>
+<div class="post-meta text-muted"> <span> 发表于 <em class="" data-ts="1659312000" data-df="YYYY/MM/DD" data-toggle="tooltip" data-placement="bottom"> 2022/08/01 </em> </span><div class="d-flex justify-content-between"> <span> 作者 <em> <a href="https://twitter.com/username">FZJJJ</a> </em> </span><div> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="4646 字"> <em>25 分钟</em>阅读</span>
+</div>
+</div>
+</div>
+<div class="post-content">
+<h2 id="函数高级">
+<span class="mr-2"><strong>函数高级</strong></span><a href="#%E5%87%BD%E6%95%B0%E9%AB%98%E7%BA%A7" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<ul>
+<li>函数默认参数<ol>
+<li>如果某个位置有默认参数，那么从这个位置向后都必须要有默认值（无论是函数声明或是函数实现）。</li>
+<li>如果函数声明处有默认值，那么函数实现不可以有默认值，否则对编译器产生了二义性。</li>
+</ol>
+</li>
+<li>函数的占位参数<ol>
+<li>函数的形参列表可以有占位参数，调用的时候必须填补此位置。</li>
+<li>占位参数也可以有默认值。</li>
+</ol>
+</li>
+<li>函数重载<ol>
+<li>函数名可以相同，用来提高复用性。</li>
+<li>满足条件：<ul>
+<li>同一个作用域下</li>
+<li>函数名称相同</li>
+<li>函数<em>参数</em> <strong>类型</strong>不同或者<strong>个数</strong>不同或者<strong>顺序</strong>不同</li>
+</ul>
+</li>
+<li>函数返回值不作为函数重载的条件。</li>
+<li>
+<strong>注意事项</strong><ul>
+<li>总体上来说就是二义性的判断</li>
+<li>引用作为重载条件时，注意引用传递时的const</li>
+<li>遇到带默认参数时的歧义</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="类和对象">
+<span class="mr-2"><strong>类和对象</strong></span><a href="#%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<blockquote><p>封装、继承与多态</p></blockquote>
+<p>第一个类：</p>
+<div class="language-cpp highlighter-rouge">
+<div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td>
+<td class="rouge-code"><pre><span class="k">class</span> <span class="nc">Circle</span>
+<span class="p">{</span>
+    <span class="c1">//访问权限</span>
+    <span class="c1">//公共权限</span>
+<span class="nl">public:</span>
+    <span class="c1">//属性</span>
+    <span class="kt">int</span> <span class="n">m_r</span><span class="p">;</span>
+    <span class="c1">//方法</span>
+    <span class="kt">double</span> <span class="n">cal_ZC</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">PI</span> <span class="o">*</span> <span class="n">m_r</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="k">const</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="n">Circle</span> <span class="n">c1</span><span class="p">;</span><span class="c1">//实例化</span>
+    <span class="n">c1</span><span class="p">.</span><span class="n">m_r</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span><span class="c1">//给属性“半径”赋值</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">c1</span><span class="p">.</span><span class="n">cal_ZC</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span><span class="c1">//调用“求周长”方法</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p>类中的属性和行为都称为成员，行为也称为成员函数或成员方法。</p>
+<p>关于封装有何意义？</p>
+<p>访问权限：</p>
+<ol>
+<li>公共权限（public）—-成员在类内可以访问、类外也可以访问</li>
+<li>保护权限（protected）—-成员在类内可以访问、类外不可以，子类可以访问父类的保护内容</li>
+<li>私有权限（private）—-成员在类内可以访问、类外不可以，子类不可访问父类私有内容</li>
+</ol>
+<p>CPP里<em>结构体</em>和<em>类</em>的区别与联系？</p>
+<p>唯一的区别在于<strong>默认的访问权限</strong>不同。</p>
+<div class="language-cpp highlighter-rouge">
+<div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td>
+<td class="rouge-code"><pre><span class="k">class</span> <span class="nc">C</span><span class="p">{</span>
+    <span class="kt">int</span> <span class="n">m_x</span><span class="p">;</span><span class="c1">//默认private</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nc">S</span><span class="p">{</span>
+    <span class="kt">int</span> <span class="n">m_x</span><span class="p">;</span><span class="c1">//默认public</span>
+<span class="p">};</span>
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="k">const</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="n">C</span> <span class="n">c1</span><span class="p">;</span>
+    <span class="c1">// c1.m_x (Inaccessible);</span>
+    <span class="n">S</span> <span class="n">c2</span><span class="p">;</span>
+    <span class="n">c2</span><span class="p">.</span><span class="n">m_x</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p>成员属性一般设置为私有，可以利用公用的方法去单独对属性进行可读或可写的区分：</p>
+<ol>
+<li>可以自己控制读写权限</li>
+<li>对于写的权限，可以检测数据的有效性</li>
+</ol>
+<p><strong>对象的初始化和清理</strong></p>
+<p>利用构造函数和析构函数，编译器会自动提供其<em>空实现</em></p>
+<ul>
+<li>构造函数：作用在于创建对象时为对象的成员属性赋值，由编译器自动调用，无需手动调用</li>
+<li>析构函数：作用在于对象<strong>销毁前</strong>系统自动调用，执行一些清理工作</li>
+</ul>
+<p><strong>构造函数语法</strong>：类名(){}</p>
+<ol>
+<li>无返回值也不写void</li>
+<li>函数名称与类名相同</li>
+<li>构造函数可以有参数，可发生重载</li>
+<li>程序在调用对象时会自动调用构造，无需手动调用，且只会调用一次</li>
+</ol>
+<p><strong>析构函数语法</strong>：~类名(){}</p>
+<ol>
+<li>无返回值也不写void</li>
+<li>函数名称与类名相同且在前面加～</li>
+<li>构造函数不可以有参数，不可发生重载</li>
+<li>程序在对象销毁前会自动调用析构，无需手动调用，且只会调用一次</li>
+</ol>
+<p><strong>构造函数的分类及调用</strong>：</p>
+<p>分类方式：</p>
+<ul>
+<li>按参数：有参构造和无参构造</li>
+<li>按类型：普通构造和拷贝构造</li>
+</ul>
+<p>调用方式：</p>
+<ul>
+<li>括号法</li>
+<li>显示法</li>
+<li>隐式转换法</li>
+</ul>
+<hr>
+<h2 id="stlstandard-template-library标准模版库">
+<span class="mr-2"><strong>STL</strong>（Standard Template Library，标准模版库）</span><a href="#stlstandard-template-library%E6%A0%87%E5%87%86%E6%A8%A1%E7%89%88%E5%BA%93" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<blockquote><p>为了提高代码的复用性，为建立数据结构和算法的一套标准而诞生了STL</p></blockquote>
+<p>广义分为三部分：</p>
+<ul>
+<li>容器</li>
+<li>算法</li>
+<li>迭代器</li>
+</ul>
+<p><strong>容器</strong>和<strong>算法</strong>之间通过<strong>迭代器</strong>而无缝连接</p>
+<h3 id="stl六大组件">
+<span class="mr-2">STL六大组件</span><a href="#stl%E5%85%AD%E5%A4%A7%E7%BB%84%E4%BB%B6" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p><strong>容器、算法、迭代器、仿函数、适配器、空间配置器</strong></p>
+<ol>
+<li>容器：各种数据结构，如vector、list、deque、set、map，用以存放数据</li>
+<li>算法：各种常见的算法，如sort、find、copy、for_each</li>
+<li>迭代器：扮演容器与算法之间的胶合剂</li>
+<li>仿函数：行为类似函数，可作为算法某种策略</li>
+<li>适配器：一种用以修饰容器或仿函数或迭代器接口的东西</li>
+<li>空间配置器：负责空间的配置与管理</li>
+</ol>
+<p><strong>容器</strong>：</p>
+<ul>
+<li>序列式容器：强调值的顺序，各元素有固定的位置</li>
+<li>关联式容器：二叉树结构，各元素之间无严格的物理顺序关系</li>
+</ul>
+<p><strong>算法</strong>：</p>
+<ul>
+<li>质变算法：运算过程中改变区间内元素的内容，如拷贝、替换、删除</li>
+<li>非质变算法：不改变元素的内容，如查找、计数、循环、遍历等</li>
+</ul>
+<p><strong>迭代器种类</strong>：</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">种类</th>
+<th style="text-align: center">功能</th>
+<th style="text-align: center">支持运算</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">输入迭代器</td>
+<td style="text-align: center">对数据只读访问</td>
+<td style="text-align: center">只读，支持++、==、！=</td>
+</tr>
+<tr>
+<td style="text-align: center">输出迭代器</td>
+<td style="text-align: center">对数据的只写访问</td>
+<td style="text-align: center">只写，支持++</td>
+</tr>
+<tr>
+<td style="text-align: center">前向迭代器</td>
+<td style="text-align: center">读写操作，能向前推进迭代器</td>
+<td style="text-align: center">读写，支持++、==、！=</td>
+</tr>
+<tr>
+<td style="text-align: center">双向迭代器</td>
+<td style="text-align: center">读写操作，能向前和向后推进</td>
+<td style="text-align: center">读写，支持++、–</td>
+</tr>
+<tr>
+<td style="text-align: center">随机访问迭代器</td>
+<td style="text-align: center">读写操作，可以以跳跃方式任意访问数据，功能最强的迭代器</td>
+<td style="text-align: center">读写，支持++、–、[n]、-[n]、&lt;,&lt;=,&gt;,&gt;=</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>常用容器中迭代器种类为双向迭代器和随机访问迭代器</em></p>
+<hr>
+<h3 id="vector容器">
+<span class="mr-2">vector容器</span><a href="#vector%E5%AE%B9%E5%99%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="language-cpp highlighter-rouge">
+<div class="code-header"> <span data-label-text="Cpp"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td>
+<td class="rouge-code"><pre><span class="kt">void</span> <span class="nf">test</span><span class="p">(){</span>
+    <span class="c1">//创建容器</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span>
+    <span class="c1">//插入值</span>
+    <span class="n">v</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+    <span class="n">v</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+    <span class="n">v</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">15</span><span class="p">);</span>
+    <span class="c1">//利用迭代器遍历容器</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">it</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="n">it</span> <span class="o">!=</span> <span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="n">it</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">it</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">//调用函数遍历</span>
+    <span class="n">for_each</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">myPrint</span><span class="p">);</span> 
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<p>vector容器的<strong>构造函数：</strong></p>
+<ol>
+<li>直接构造 <code class="language-plaintext highlighter-rouge">vector&lt;int&gt; v</code>
+</li>
+<li>通过区间方式构造（类似于Python列表的切片） <code class="language-plaintext highlighter-rouge">vector &lt;int&gt; v2(v.begin(), v.end())</code>
+</li>
+<li>利用n个元素去构造 <code class="language-plaintext highlighter-rouge">vector&lt;int&gt; v3(10, 100)</code>
+</li>
+<li>拷贝构造 <code class="language-plaintext highlighter-rouge">vector&lt;int&gt; v4(v3)</code>
+</li>
+</ol>
+<hr>
+<h3 id="deque容器">
+<span class="mr-2">deque容器</span><a href="#deque%E5%AE%B9%E5%99%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>可近似看成双端开口的vector容器</p>
+<p><strong>工作原理</strong>：</p>
+<p>内部有个中控器，维护每段缓冲区的内容，缓冲区存放真实数据</p>
+<p>中控器维护每个缓冲区的地址，使得deque好像一块连续的内存空间</p>
+<ul><li>该容器的迭代器也支持随机访问</li></ul>
+<p>vector容器的<strong>构造函数：</strong></p>
+<ol>
+<li>直接构造 <code class="language-plaintext highlighter-rouge">deque&lt;int&gt; d</code>
+</li>
+<li>通过区间方式构造（类似于Python列表的切片） <code class="language-plaintext highlighter-rouge">deque&lt;int&gt; d2(d.begin(), d.end())</code>
+</li>
+<li>利用n个元素去构造 <code class="language-plaintext highlighter-rouge">deque&lt;int&gt; d3(10, 100)</code>
+</li>
+<li>拷贝构造 <code class="language-plaintext highlighter-rouge">deque&lt;int&gt; d4(d3)</code>
+</li>
+</ol>
+<p>赋值操作：</p>
+<ul>
+<li>Operator “=” 重载</li>
+<li>assign（区间）或assign(n, elem)</li>
+</ul>
+<p>和vector一样</p>
+<p>大小操作：</p>
+<ul>
+<li><code class="language-plaintext highlighter-rouge">duque.empty()//是否为空</code></li>
+<li><code class="language-plaintext highlighter-rouge">duque.size()//查看大小</code></li>
+<li><code class="language-plaintext highlighter-rouge">duque.resize()//重新规定大小</code></li>
+<li><code class="language-plaintext highlighter-rouge">duque.resize(num, elem)</code></li>
+</ul>
+<p>注意和vecctor不同的是，该容器无capacity方法，因为其容量可无限增加</p>
+<p>插入和删除操作：</p>
+<p>两端：</p>
+<ul>
+<li><p><code class="language-plaintext highlighter-rouge">push_back(elem)//尾部插入</code></p></li>
+<li><code class="language-plaintext highlighter-rouge">push_front(elem)//头部插入</code></li>
+<li><code class="language-plaintext highlighter-rouge">pop_back()//尾部删除</code></li>
+<li><code class="language-plaintext highlighter-rouge">pop_front()//头部删除</code></li>
+</ul>
+<p>指定位置：</p>
+<ul>
+<li><code class="language-plaintext highlighter-rouge">insert(pos, elem)//pos位置插入elem拷贝，且返回elem</code></li>
+<li><code class="language-plaintext highlighter-rouge">insert(pos, n, elem)//pos位置插入n个elem，无返回值</code></li>
+<li><code class="language-plaintext highlighter-rouge">insert(pos, begin, end)//pos位置插入[begin, end)区间，无返回值</code></li>
+<li><code class="language-plaintext highlighter-rouge">clear()//清除整个容器内容</code></li>
+<li><code class="language-plaintext highlighter-rouge">erase(begin, end)//删除[begin, end)区间，返回下一个值</code></li>
+<li><code class="language-plaintext highlighter-rouge">erase(pos)//删除pos位置数据，返回下一个值</code></li>
+</ul>
+<p>注意插入时的pos位置应该是迭代器提供，而非是索引值！</p>
+<p>数据存取操作：</p>
+<ul>
+<li><code class="language-plaintext highlighter-rouge">at(int index)//返回索引值为index的数据</code></li>
+<li><code class="language-plaintext highlighter-rouge">operator[]//返回索引值index的数据</code></li>
+<li><code class="language-plaintext highlighter-rouge">front()//返回第一个数据</code></li>
+<li><code class="language-plaintext highlighter-rouge">back()//返回最后一个数据</code></li>
+</ul>
+<p>排序操作：</p>
+<ul><li><code class="language-plaintext highlighter-rouge">sort(d.begin(), d.end())//默认升序排列</code></li></ul>
+<p>sort算法支持随机访问迭代器的容器排序，deque、vector等</p>
+<h3 id="stack容器">
+<span class="mr-2">stack容器</span><a href="#stack%E5%AE%B9%E5%99%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<hr>
+<p>先进后出的数据结构，只有一个出口</p>
+<p>只有栈顶的元素才可以被外界使用，因此不允许栈有遍历</p>
+<p><strong>常用接口</strong>：</p>
+<ul>
+<li><code class="language-plaintext highlighter-rouge">stack.push()//入栈操作</code></li>
+<li><code class="language-plaintext highlighter-rouge">stack.pop()//出栈操作</code></li>
+<li><code class="language-plaintext highlighter-rouge">stack.top()//返回栈顶元素</code></li>
+<li><code class="language-plaintext highlighter-rouge">stack.empty()//判断栈是否为空</code></li>
+<li><code class="language-plaintext highlighter-rouge">stack.size()//返回栈的大小</code></li>
+</ul>
+<h3 id="queue容器">
+<span class="mr-2">queue容器</span><a href="#queue%E5%AE%B9%E5%99%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<hr>
+<p>先进先出的数据结构，有一个入口一个出口</p>
+<p>只有队尾和队头可以被使用到，因此也不存在遍历行为</p>
+<p><strong>常用接口</strong>：</p>
+<ul>
+<li><code class="language-plaintext highlighter-rouge">queue.front()//访问队头元素</code></li>
+<li><code class="language-plaintext highlighter-rouge">queue.back()//访问队尾元素</code></li>
+<li><code class="language-plaintext highlighter-rouge">queue.empty()//判断是否为空</code></li>
+<li><code class="language-plaintext highlighter-rouge">queue.push//放入</code></li>
+<li><code class="language-plaintext highlighter-rouge">queue.pop//弹出</code></li>
+<li><code class="language-plaintext highlighter-rouge">queue.size()//返回队列大小</code></li>
+</ul>
+<h3 id="list容器">
+<span class="mr-2">list容器</span><a href="#list%E5%AE%B9%E5%99%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<hr>
+<p>将数据进行链式存储，主要实现链表</p>
+<p>链表由一系列的结点组成，每个结点都有数据域和指针域</p>
+<p>注意在STL中list容器所实现的是双向循环链表，因此该容器的迭代器为双向迭代器，而非随机访问迭代器</p>
+<p>其优点：</p>
+<ul>
+<li>动态分配存储，不会内存浪费和溢出</li>
+<li>执行插入和删除的操作十分方便</li>
+</ul>
+<p>缺点：</p>
+<ul><li>消耗空间（指针域）和时间（查找）比较大</li></ul>
+<p><strong>构造函数：</strong></p>
+<ul>
+<li><code class="language-plaintext highlighter-rouge">list&lt;int&gt; l1//默认构造</code></li>
+<li><code class="language-plaintext highlighter-rouge">list&lt;int&gt; l2(l1.begin(), l1.end())//区间构造</code></li>
+<li><code class="language-plaintext highlighter-rouge">list&lt;int&gt; l3(l2)//拷贝构造</code></li>
+<li><code class="language-plaintext highlighter-rouge">list&lt;int&gt; l4(n, elem)//相同元素构造</code></li>
+</ul>
+<p><strong>常用接口</strong>：</p>
+<p><strong>赋值与交换</strong>：</p>
+<ul>
+<li>
+<code class="language-plaintext highlighter-rouge">l2 = l1</code>operator = 赋值</li>
+<li><code class="language-plaintext highlighter-rouge">l3.assign(l2.begin(), l2.end())</code></li>
+<li><code class="language-plaintext highlighter-rouge">l3.assign(n, elem)</code></li>
+<li>
+<code class="language-plaintext highlighter-rouge">l3.swap(l2)</code>交换容器内的元素</li>
+</ul>
+<p><strong>大小操作</strong>：</p>
+<ul>
+<li><code class="language-plaintext highlighter-rouge">list.size()</code></li>
+<li><code class="language-plaintext highlighter-rouge">list.empty()</code></li>
+<li>
+<code class="language-plaintext highlighter-rouge">list.resize(num)</code>超出的部分用默认值0填充</li>
+<li>
+<code class="language-plaintext highlighter-rouge">list.resize(num, elem)</code>超出部分用elem填充</li>
+</ul>
+<p><strong>插入与删除</strong>：</p>
+<ul>
+<li><p><code class="language-plaintext highlighter-rouge">push_back(elem)</code></p></li>
+<li><code class="language-plaintext highlighter-rouge">pop_back()</code></li>
+<li><code class="language-plaintext highlighter-rouge">push_front(elem)</code></li>
+<li><code class="language-plaintext highlighter-rouge">pop_front()</code></li>
+<li>
+<code class="language-plaintext highlighter-rouge">insert(pos, elem)</code>返回新插入elem的位置</li>
+<li>
+<code class="language-plaintext highlighter-rouge">insert(pos, n, elem)</code>无返回值</li>
+<li>
+<code class="language-plaintext highlighter-rouge">insert(pos, begin, end)</code>无返回值</li>
+<li><code class="language-plaintext highlighter-rouge">clear()</code></li>
+<li>
+<code class="language-plaintext highlighter-rouge">erase(begin, end)</code>返回下一个元素的位置</li>
+<li>
+<code class="language-plaintext highlighter-rouge">erase(pos)</code>返回下一个元素的位置</li>
+<li>
+<code class="language-plaintext highlighter-rouge">remove(elem)</code>删除所有elem的元素</li>
+</ul>
+<p><strong>数据存取</strong>：</p>
+<ul>
+<li>
+<code class="language-plaintext highlighter-rouge">list.front()</code>返回第一个元素</li>
+<li>
+<code class="language-plaintext highlighter-rouge">list.back()</code>返回最后一个元素</li>
+<li>注意该容器不支持随机访问，故无法用下标或at访问元素</li>
+</ul>
+<p><strong>反转和排序</strong>：</p>
+<ul>
+<li><code class="language-plaintext highlighter-rouge">list.reverse()</code></li>
+<li>
+<code class="language-plaintext highlighter-rouge">list.sort()</code>要在括号里写回调函数，来规定排序的规则</li>
+</ul>
+<p>注意，对于不支持随机访问迭代器的容器，不可以用<code class="language-plaintext highlighter-rouge">sort(l.begin(), l.end())</code></p>
+<h3 id="setmultiset容器">
+<span class="mr-2">set/multiset容器</span><a href="#setmultiset%E5%AE%B9%E5%99%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<hr>
+<p>所有的元素在插入时都会被自动排序</p>
+<p>其本质是一个<strong>关联式容器</strong>，底层结构用<strong>二叉树（红黑树）</strong>实现</p>
+<p>两者区别在于：set容器不允许存在有相同的元素，而multiset则可以</p>
+<p><strong>构造函数</strong>：</p>
+<ul>
+<li>
+<code class="language-plaintext highlighter-rouge">set&lt;int&gt; st</code>默认构造</li>
+<li>
+<code class="language-plaintext highlighter-rouge">set(const set &amp;st)</code>拷贝构造</li>
+</ul>
+<p><strong>插入数据</strong>：</p>
+<p><code class="language-plaintext highlighter-rouge">insert(elem)</code>直接按照顺序插入</p>
+<p><strong>删除数据</strong>：</p>
+<ul>
+<li><code class="language-plaintext highlighter-rouge">clear()</code></li>
+<li>
+<code class="language-plaintext highlighter-rouge">erase(pos)</code>返回下一个元素的迭代器</li>
+<li>
+<code class="language-plaintext highlighter-rouge">erase(begin, end)</code>返回下一个元素的迭代器</li>
+<li>
+<code class="language-plaintext highlighter-rouge">erase(elem)</code>删除值为elem的元素</li>
+</ul>
+<p><strong>赋值</strong>：</p>
+<p>等号重载 = <code class="language-plaintext highlighter-rouge">st2 = st1</code></p>
+<p><strong>大小和交换</strong>：</p>
+<ul>
+<li><code class="language-plaintext highlighter-rouge">size()</code></li>
+<li><code class="language-plaintext highlighter-rouge">empty()</code></li>
+<li><code class="language-plaintext highlighter-rouge">st2.swap(st1)</code></li>
+</ul>
+<p><strong>查找与统计</strong>：</p>
+<ul>
+<li>
+<code class="language-plaintext highlighter-rouge">find(key)</code>若存在，返回key元素的<strong>迭代器</strong>，若不存在，返回set.end()</li>
+<li>
+<code class="language-plaintext highlighter-rouge">count(key)</code>统计key元素的个数</li>
+</ul>
+<p>在实现一个set容器时，可以用<strong>仿函数（本质是一个类，用以重载小括号）</strong>实现自定义数据类型（比如元素为类时）指定排序的规则</p>
+<h3 id="对组">
+<span class="mr-2">对组</span><a href="#%E5%AF%B9%E7%BB%84" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<hr>
+<ul>
+<li><code class="language-plaintext highlighter-rouge">pair&lt;type, type&gt; p (value1, value2)</code></li>
+<li><code class="language-plaintext highlighter-rouge">pair&lt;type, type&gt; p = make_pair(value1, value2)</code></li>
+<li>用<code class="language-plaintext highlighter-rouge">pair.first()</code>和<code class="language-plaintext highlighter-rouge">pair.second()</code>访问</li>
+</ul>
+<h3 id="mapmultimap容器">
+<span class="mr-2">map/multimap容器</span><a href="#mapmultimap%E5%AE%B9%E5%99%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>map中所有元素都是pair</p>
+<p>pair中第一个元素为键值（key），起到索引作用，第二个元素为实值（value）</p>
+<p>所有元素会按照元素的键值自动排序</p>
+<p>也属于<strong>关联式容器</strong>，底层由<strong>二叉树（红黑树）</strong>实现</p>
+<p>同理，map中不允许含有重复的key值元素，而multimap则可以</p>
+<p><strong>构造函数</strong>：</p>
+<ul>
+<li>
+<code class="language-plaintext highlighter-rouge">map&lt;T1, T2&gt; mp</code>默认构造</li>
+<li>
+<code class="language-plaintext highlighter-rouge">map(const map &amp;mp)</code>拷贝构造</li>
+</ul>
+<p><strong>大小和交换</strong>：</p>
+<ul>
+<li>
+<code class="language-plaintext highlighter-rouge">size()</code>返回容器大小</li>
+<li>
+<code class="language-plaintext highlighter-rouge">empty()</code>判断为空</li>
+<li>
+<code class="language-plaintext highlighter-rouge">m1.swap(m2)</code>交换</li>
+</ul>
+<p><strong>插入和删除</strong>：</p>
+<ul>
+<li><code class="language-plaintext highlighter-rouge">insert(elem)</code></li>
+<li><code class="language-plaintext highlighter-rouge">clear()</code></li>
+<li>
+<code class="language-plaintext highlighter-rouge">erase(pos)</code>返回下一个元素的迭代器</li>
+<li>
+<code class="language-plaintext highlighter-rouge">erase(begin, end)</code>返回下一个元素的迭代器</li>
+<li>
+<code class="language-plaintext highlighter-rouge">erase(key)</code>删除容器中值为key的元素</li>
+</ul>
+<p><strong>查找与统计</strong>：</p>
+<ul>
+<li>
+<code class="language-plaintext highlighter-rouge">find(key)</code>查找key是否存在，若存在则返回该键的元素的迭代器；若不存在，返回set.end()</li>
+<li>
+<code class="language-plaintext highlighter-rouge">count(key)</code>统计键值为key的元素的个数（对于map来说非0即1）</li>
+</ul>
+<p><strong>排序</strong>：</p>
+<p>同样是利用仿函数改变容器的排序规则</p>
+<p>对于自定义类型的元素（如类），则必须要加入仿函数才能成功排序</p>
+<h2 id="stl-函数对象">
+<span class="mr-2">STL-函数对象</span><a href="#stl-%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<h3 id="函数对象">
+<span class="mr-2">函数对象</span><a href="#%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<hr>
+<p>概念：</p>
+<ul>
+<li>重载<strong>函数调用操作符</strong>的类，其对象通常称为函数对象</li>
+<li>
+<strong>函数对象</strong>使用重载的()时，行为类似于函数调用，故也叫<strong>仿函数</strong>
+</li>
+</ul>
+<p>本质上函数对象（仿函数）是个<strong>类</strong></p>
+<p>特点：</p>
+<ul>
+<li>函数对象使用时，可以像普通函数一样调用，可以有参数和返回值</li>
+<li>函数对象超出了普通函数的概念，其可以有自己的状态</li>
+<li>函数对象可以作为参数传递</li>
+</ul>
+<h3 id="谓词">
+<span class="mr-2">谓词</span><a href="#%E8%B0%93%E8%AF%8D" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<hr>
+<p>返回bool类型的仿函数即为谓词</p>
+<p>如果opretor()接受一个参数，即一元谓词，两个的话就是二元谓词</p>
+<h3 id="内建函数对象">
+<span class="mr-2">内建函数对象</span><a href="#%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<hr>
+<blockquote><p>即STL内建的一些函数对象</p></blockquote>
+<p>分为：</p>
+<ul>
+<li>算术仿函数</li>
+<li>关系仿函数</li>
+<li>逻辑仿函数</li>
+</ul>
+<p>用法：</p>
+<p>这些仿函数所产生的对象，用法与一般的函数完全相同</p>
+<p>使用内建仿函数时，需要引入头文件<code class="language-plaintext highlighter-rouge">#include &lt;functional&gt;</code></p>
+<h4 id="算术仿函数">
+<span class="mr-2">算术仿函数</span><a href="#%E7%AE%97%E6%9C%AF%E4%BB%BF%E5%87%BD%E6%95%B0" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>用以实现四则运算，其中negate是一元运算（取反），其他都是二元运算</p>
+<p>plus、minus、multilies、divides、modulus、negate</p>
+<h4 id="关系仿函数">
+<span class="mr-2">关系仿函数</span><a href="#%E5%85%B3%E7%B3%BB%E4%BB%BF%E5%87%BD%E6%95%B0" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>实现关系的对比</p>
+<p>equal_to、not_equal_to、greater、greater_equal、less、less_equal</p>
+<h4 id="逻辑仿函数">
+<span class="mr-2">逻辑仿函数</span><a href="#%E9%80%BB%E8%BE%91%E4%BB%BF%E5%87%BD%E6%95%B0" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>实现逻辑运算</p>
+<p>logical_and、logical_or、logical_not</p>
+<p>逻辑仿函数实际应用较少，了解即可</p>
+<h2 id="stl-常用算法">
+<span class="mr-2">STL-常用算法</span><a href="#stl-%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p>概述：</p>
+<ul>
+<li>主要是由头文件<code class="language-plaintext highlighter-rouge">&lt;algorithm&gt;</code> <code class="language-plaintext highlighter-rouge">functional&gt;</code> <code class="language-plaintext highlighter-rouge">&lt;numeric&gt;</code>组成</li>
+<li>
+<code class="language-plaintext highlighter-rouge">&lt;algorithm&gt;</code>是STL头文件最大的一个，范围涉及比较、交换、查找、遍历、复制、修改等等</li>
+<li>
+<code class="language-plaintext highlighter-rouge">&lt;numeric&gt;</code>体积很小，只包括几个序列上面进行简单数学运算的模版函数</li>
+<li>
+<code class="language-plaintext highlighter-rouge">&lt;functional&gt;</code>定义了一些模版类，用以声明函数对象</li>
+</ul>
+<h3 id="常用遍历算法">
+<span class="mr-2">常用遍历算法</span><a href="#%E5%B8%B8%E7%94%A8%E9%81%8D%E5%8E%86%E7%AE%97%E6%B3%95" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>for_each</p>
+<p>实现遍历容器</p>
+<ul><li><code class="language-plaintext highlighter-rouge">for_each(iterator begin, iterator end, _func);</code></li></ul>
+<p>​ //遍历算法 遍历容器元素</p>
+<p>​ //begin 开始迭代器</p>
+<p>​ //end 结束迭代器</p>
+<p>​ //_func 函数或者函数对象（仿函数）</p>
+<p>transform</p>
+<p>搬运容器到另一个容器中</p>
+<ul><li><code class="language-plaintext highlighter-rouge">transform(iterator begin, iterator end, iterator_target begin, _func)</code></li></ul>
+<p>​ //按顺序分别是</p>
+<p>​ //原容器开始迭代器</p>
+<p>​ //原容器结束迭代器</p>
+<p>​ //目标容器开始迭代器</p>
+<p>​ //函数或者函数对象（仿函数）</p>
+<h3 id="常用查找算法">
+<span class="mr-2">常用查找算法</span><a href="#%E5%B8%B8%E7%94%A8%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>简介：</p>
+<ul>
+<li>
+<code class="language-plaintext highlighter-rouge">find</code> //查找元素</li>
+<li>
+<code class="language-plaintext highlighter-rouge">find_if </code> //按条件查找元素</li>
+<li>
+<code class="language-plaintext highlighter-rouge">adjacent_find</code> //查找相邻重复元素</li>
+<li>
+<code class="language-plaintext highlighter-rouge">binary_search</code> //二分查找法</li>
+<li>
+<code class="language-plaintext highlighter-rouge">count</code> //统计元素个数</li>
+<li>
+<code class="language-plaintext highlighter-rouge">count_if</code> //按条件统计元素个数</li>
+</ul>
+<h4 id="find">
+<span class="mr-2">find</span><a href="#find" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>查找指定的元素，找到返回该元素的迭代器，找不到则返回结束迭代器end()</p>
+<ul><li><code class="language-plaintext highlighter-rouge">find(iterator begin, iterator end, value)</code></li></ul>
+<p>对于自定义类型的查找，若是失败，可以对<code class="language-plaintext highlighter-rouge">==</code>进行重载</p>
+<h4 id="find_if">
+<span class="mr-2">find_if</span><a href="#find_if" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>按条件查找元素</p>
+<ul><li><code class="language-plaintext highlighter-rouge">find_if(iterator begin, iterator end, _pred)</code></li></ul>
+<p>_pred表示函数或者谓词（返回bool类型的仿函数）</p>
+<p>同样是返回迭代器，与<code class="language-plaintext highlighter-rouge">find</code>类似</p>
+<h4 id="adjacent_find">
+<span class="mr-2">adjacent_find</span><a href="#adjacent_find" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>查找相邻重复元素</p>
+<ul><li><code class="language-plaintext highlighter-rouge">adjacent_find(iterator begin, iterator end)</code></li></ul>
+<p>返回<strong>相邻且重复</strong>元素的第一个位置的迭代器</p>
+<h4 id="binary_search">
+<span class="mr-2">binary_search</span><a href="#binary_search" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>查找指定的元素是否存在</p>
+<ul><li><code class="language-plaintext highlighter-rouge">bool binary_search(iterator begin, iterator end, value)</code></li></ul>
+<p>查找指定的元素，找到返回True，反之返回False</p>
+<p>二分查找的效率很高</p>
+<p>注意：必须在<strong>有序序列</strong>中才可以使用</p>
+<h4 id="count">
+<span class="mr-2">count</span><a href="#count" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>统计元素的个数</p>
+<ul><li><code class="language-plaintext highlighter-rouge">count(iterator begin, iterator end, value)</code></li></ul>
+<p>关于自定义类型（如类）的数据，应该对<code class="language-plaintext highlighter-rouge">==</code>进行重载，才可以成功查找</p>
+<h4 id="count_if">
+<span class="mr-2">count_if</span><a href="#count_if" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>按条件统计元素的个数</p>
+<ul><li><code class="language-plaintext highlighter-rouge">count_if(iterator begin, iterator end, _pred)</code></li></ul>
+<p>_Pred 谓词</p>
+<h3 id="常用排序算法">
+<span class="mr-2">常用排序算法</span><a href="#%E5%B8%B8%E7%94%A8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<ul>
+<li>
+<code class="language-plaintext highlighter-rouge">sort</code> //对容器内元素进行排序</li>
+<li>
+<code class="language-plaintext highlighter-rouge">random_shuffle</code> //洗牌，指定范围内容器随机调整次序</li>
+<li>
+<code class="language-plaintext highlighter-rouge">merge</code> //容器元素合并，并存储到另一个容器里</li>
+<li>
+<code class="language-plaintext highlighter-rouge">reverse</code> //反转指定范围内的元素</li>
+</ul>
+<h4 id="sort">
+<span class="mr-2">sort</span><a href="#sort" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>排序算法，默认升序</p>
+<ul><li><code class="language-plaintext highlighter-rouge">sort(iterator begin, iterator end, _pred)</code></li></ul>
+<p>可以利用谓词进行特定顺序的排序</p>
+<h4 id="random_shuffle">
+<span class="mr-2">random_shuffle</span><a href="#random_shuffle" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>指定范围内的元素随机调整顺序</p>
+<ul><li><code class="language-plaintext highlighter-rouge">random_shuffle(iterator begin, iterator end)</code></li></ul>
+<p>注意，其本质上也是伪随机，可以加入一行随机数种子<code class="language-plaintext highlighter-rouge">srand((unsigned int)time(NULL))</code></p>
+<h4 id="merge">
+<span class="mr-2">merge</span><a href="#merge" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>两个容器的元素合并，并存储到<strong>另一</strong>容器中</p>
+<ul><li><code class="language-plaintext highlighter-rouge">merge(iterator beg1, iterator end1, iterator beg2, iterator end2, iterator dest)</code></li></ul>
+<p>注意，两个容器必须是<strong>有序</strong>的</p>
+<p>dest为目标容器的开始迭代器，其也需要提前用resize开辟空间</p>
+<h4 id="reverse">
+<span class="mr-2">reverse</span><a href="#reverse" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>将容器内元素进行反转</p>
+<ul><li><code class="language-plaintext highlighter-rouge">reverse(iterator begin, itetator end)</code></li></ul>
+<h3 id="常用拷贝和替换算法">
+<span class="mr-2">常用拷贝和替换算法</span><a href="#%E5%B8%B8%E7%94%A8%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%9B%BF%E6%8D%A2%E7%AE%97%E6%B3%95" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<h4 id="copy">
+<span class="mr-2">copy</span><a href="#copy" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>容器内指定范围内的元素拷贝到另一个容器中</p>
+<ul><li><code class="language-plaintext highlighter-rouge">copy(iterator begin, iterator end, iterator dest)</code></li></ul>
+<p>同理，目标容器要提前开辟空间</p>
+<h4 id="replace">
+<span class="mr-2">replace</span><a href="#replace" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>将容器内指定范围的旧元素修改为新元素</p>
+<ul><li><code class="language-plaintext highlighter-rouge">replace(iterator begin, iterator end, old value, newvalue)</code></li></ul>
+<h4 id="repalce_if">
+<span class="mr-2">repalce_if</span><a href="#repalce_if" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>将区间内满足条件的元素替换成指定元素</p>
+<ul><li><code class="language-plaintext highlighter-rouge">replace_if(iterator begin, iterator end, _Pred, newValue)</code></li></ul>
+<h4 id="swap">
+<span class="mr-2">swap</span><a href="#swap" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>互换两个容器的元素</p>
+<ul><li><code class="language-plaintext highlighter-rouge">swap(container c1, container c2)</code></li></ul>
+<h3 id="常用算数生成算法">
+<span class="mr-2">常用算数生成算法</span><a href="#%E5%B8%B8%E7%94%A8%E7%AE%97%E6%95%B0%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>属于是小型算法，使用时包含的头文件为<code class="language-plaintext highlighter-rouge">include &lt;numeric&gt;</code></p>
+<h4 id="accumulate">
+<span class="mr-2">accumulate</span><a href="#accumulate" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>计算容器区间内元素总和</p>
+<ul><li><code class="language-plaintext highlighter-rouge">accumulate(iterator beg, iterator end, value)</code></li></ul>
+<p>返回累加的总和，value代表起始值，一般可以写0</p>
+<h4 id="fill">
+<span class="mr-2">fill</span><a href="#fill" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>向容器内填充指定的元素</p>
+<ul><li><code class="language-plaintext highlighter-rouge">fill(iterator begin, iterator end, value)</code></li></ul>
+<p>value为填充的值</p>
+<h3 id="常用集合算法">
+<span class="mr-2">常用集合算法</span><a href="#%E5%B8%B8%E7%94%A8%E9%9B%86%E5%90%88%E7%AE%97%E6%B3%95" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<h4 id="set_intersection">
+<span class="mr-2">set_intersection</span><a href="#set_intersection" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>求两个容器的交集</p>
+<ul><li><code class="language-plaintext highlighter-rouge">set_intersection(iterator beg1, iterator end1, iterator beg2, iterator end2, iterator dest)</code></li></ul>
+<p>注意，原有两个容器必须得是有序的</p>
+<p>dest表示新的容器的开始迭代器，新的迭代器也需要提前开辟空间</p>
+<h4 id="set_union">
+<span class="mr-2">set_union</span><a href="#set_union" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>求两个容器的并集</p>
+<ul><li><code class="language-plaintext highlighter-rouge">set_union(iterator beg1, iterator end1, iterator beg2, iterator end2, iterator dest)</code></li></ul>
+<p>要求同上算法，两个原容器必须得是有序的</p>
+<p>dest需提前开辟空间</p>
+<h4 id="set_difference">
+<span class="mr-2">set_difference</span><a href="#set_difference" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>求两个集合的差集</p>
+<ul><li><code class="language-plaintext highlighter-rouge">set_difference(iterator beg1, iterator end1, iterator beg2, iterator end2, iterator dest)</code></li></ul>
+<p>要求同上算法，两个原容器必须得是有序的</p>
+<p>dest需提前开辟空间</p>
+</div>
+<div class="post-tail-wrapper text-muted">
+<div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href="/categories/blog/">blog</a>
+</div>
+<div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/cpp/" class="post-tag no-text-decoration">cpp</a>
+</div>
+<div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2">
+<div class="license-wrapper"> 本文由作者按照 <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> 进行授权</div>
+<div class="share-wrapper"> <span class="share-label text-muted mr-1">分享</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=C%2B%2B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0+-+FZJ&amp;url=%2Fposts%2FCPP%25E5%25AD%25A6%25E4%25B9%25A0%25E8%25AE%25B0%25E5%25BD%2595%2F" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=C%2B%2B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0+-+FZJ&amp;u=%2Fposts%2FCPP%25E5%25AD%25A6%25E4%25B9%25A0%25E8%25AE%25B0%25E5%25BD%2595%2F" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=%2Fposts%2FCPP%25E5%25AD%25A6%25E4%25B9%25A0%25E8%25AE%25B0%25E5%25BD%2595%2F&text=C%2B%2B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0+-+FZJ" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i id="copy-link" class="fa-fw fas fa-link small" data-toggle="tooltip" data-placement="top" title="分享链接" data-title-succeed="链接已复制！"> </i> </span>
+</div>
+</div>
+</div>
+</div></div>
+<div id="panel-wrapper" class="col-xl-3 pl-2 text-muted">
+<div class="access">
+<div id="access-lastmod" class="post">
+<div class="panel-heading">最近更新</div>
+<ul class="post-content pl-0 pb-1 ml-1 mt-2">
+<li><a href="/posts/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/">前端基础学习笔记</a></li>
+<li><a href="/posts/latex/">latex简单语法</a></li>
+<li><a href="/posts/deep-learning-01/">邱锡鹏《神经网络与深度学习》01</a></li>
+</ul>
+</div>
+<div id="access-tags">
+<div class="panel-heading">热门标签</div>
+<div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/tools/">tools</a> <a class="post-tag" href="/tags/cpp/">cpp</a> <a class="post-tag" href="/tags/deeplearning/">deeplearning</a> <a class="post-tag" href="/tags/life/">life</a> <a class="post-tag" href="/tags/web/">web</a>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5">
+<div class="panel-heading pl-3 pt-2 mb-2">文章内容</div>
+<nav id="toc" data-toggle="toc"></nav>
+</div>
+</div>
+</div>
+<div class="row"><div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 pl-3 pr-3 pr-xl-4 mt-5">
+<div id="related-posts" class="mb-2 mb-sm-4">
+<h3 class="pt-2 mb-4 ml-1" data-toc-skip>相关文章</h3>
+<div class="card-deck mb-4">
+<div class="card"> <a href="/posts/first-post/"><div class="card-body"> <em class="small" data-ts="1656720000" data-df="YYYY/MM/DD"> 2022/07/02 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>我的第一篇博文</h3>
+<div class="text-muted small"><p> 先尝试一下好不好用，用typora加上阿里云OSS图床和PicGo。 就先这样，没什么特别好写的。</p></div>
+</div></a>
+</div>
+<div class="card"> <a href="/posts/latex/"><div class="card-body"> <em class="small" data-ts="1656720000" data-df="YYYY/MM/DD"> 2022/07/02 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>latex简单语法</h3>
+<div class="text-muted small"><p> 主要面向于实战，因为要做深度学习的一些东西，写博文难免要写各种公式，所以在此简单总结一下，随时更新，遇到不会的再添加上去，主要服务于个人。 插入公式的两种方法 行内插入：比如在这句话里插入一个$\beta$，所用的语法是$\beta$ 插入块：所用的语法是$$\int_{a}^{b}f(x)$$ $$ \int_{a}^{b}f(x) $$ 相关具体语法 希腊字母 使...</p></div>
+</div></a>
+</div>
+<div class="card"> <a href="/posts/deep-learning-01/"><div class="card-body"> <em class="small" data-ts="1656806400" data-df="YYYY/MM/DD"> 2022/07/03 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>邱锡鹏《神经网络与深度学习》01</h3>
+<div class="text-muted small"><p> 此系列博客来源于邱锡鹏教授的《神经网络与深度学习》一书，在学习此书的同时，写一点东西加深记忆，同时也是为了夏令营做准备（老师的唯一指定复习书籍）。本书主要分为三个pt，机器学习基础、基础模型与进阶模型，后续将每章写一篇博文。 chapter1 绪论 深度学习实际上就是借助一个模型，该模型包含若干线性或非线性的组件，对模型的训练便是在改变各个组件的参数，调整它们的贡献度，即所谓的贡献度分配...</p></div>
+</div></a>
+</div>
+</div>
+</div>
+<div class="post-navigation d-flex justify-content-between"> <a href="/posts/slidev%E7%9A%84%E5%AE%89%E8%A3%85/" class="btn btn-outline-primary" prompt="上一篇"><p>m1mac下slidev的安装</p></a> <a href="/posts/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" class="btn btn-outline-primary" prompt="下一篇"><p>前端基础学习笔记</p></a>
+</div>
+</div></div>
+</div>
+<div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content">
+<div id="search-hints"><div id="access-tags">
+<div class="panel-heading">热门标签</div>
+<div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/tools/">tools</a> <a class="post-tag" href="/tags/cpp/">cpp</a> <a class="post-tag" href="/tags/deeplearning/">deeplearning</a> <a class="post-tag" href="/tags/life/">life</a> <a class="post-tag" href="/tags/web/">web</a>
+</div>
+</div></div>
+<div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div>
+</div></div>
+</div>
+<footer><div class="container pl-lg-4 pr-lg-4"><div class="d-flex justify-content-between align-items-center text-muted ml-md-3 mr-md-3">
+<div class="footer-left"><p class="mb-0"> © 2022 <a href="https://twitter.com/username">FZJJJ</a>. <span data-toggle="tooltip" data-placement="top" title="除非另有说明，本网站上的博客文章均由作者按照知识共享署名 4.0 国际 (CC BY 4.0) 许可协议进行授权。">保留部分权利。</span></p></div>
+<div class="footer-right"><p class="mb-0"> 本站由 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 生成，采用 <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> 主题。</p></div>
+</div></div></footer><div id="mask"></div>
+<a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">搜索结果为空</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script src="https://cdn.jsdelivr.net/combine/npm/magnific-popup@1/dist/jquery.magnific-popup.min.js,npm/lozad/dist/lozad.min.js,npm/clipboard@2/dist/clipboard.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/dayjs@1/dayjs.min.js,npm/dayjs@1/locale/zh.min.js,npm/dayjs@1/plugin/relativeTime.min.js,npm/dayjs@1/plugin/localizedFormat.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.bundle.min.js"></script> <script defer src="/unregister.js"></script>
+</body>
+</html>

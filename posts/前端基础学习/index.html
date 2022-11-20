@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Jekyll v4.3.1">
+<meta property="og:title" content="前端基础学习笔记">
+<meta property="og:locale" content="zh_CN">
+<meta name="description" content="html&amp;css一些基础记录">
+<meta property="og:description" content="html&amp;css一些基础记录">
+<link rel="canonical" href="/posts/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/">
+<meta property="og:url" content="/posts/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/">
+<meta property="og:site_name" content="FZJ">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-10-06T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="前端基础学习笔记">
+<meta name="twitter:site" content="@twitter_username"> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-10-06T15:34:42+00:00","datePublished":"2022-10-06T00:00:00+00:00","description":"html&amp;css一些基础记录","headline":"前端基础学习笔记","mainEntityOfPage":{"@type":"WebPage","@id":"/posts/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/"},"url":"/posts/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/"}</script><title>前端基础学习笔记 | FZJ</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
+<link rel="manifest" href="/assets/img/favicons/site.webmanifest">
+<link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
+<meta name="apple-mobile-web-app-title" content="FZJ">
+<meta name="application-name" content="FZJ">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato&family=Source+Sans+Pro:wght@400;600;700;900&amp;display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css">
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get MODE_ATTR() { return "data-mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } static get ID() { return "mode-toggle"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } let self = this; /* always follow the system prefers */ this.sysDarkPrefers.addEventListener("change", () => { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.notify(); }); } /* constructor() */ get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode === ModeToggle.DARK_MODE; } get isLightMode() { return this.mode === ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer)) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } setDark() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_ATTR); sessionStorage.removeItem(ModeToggle.MODE_KEY); } /* Notify another plugins that the theme mode has changed */ notify() { window.postMessage({ direction: ModeToggle.ID, message: this.modeStatus }, "*"); } } /* ModeToggle */ const toggle = new ModeToggle(); function flipMode() { if (toggle.hasMode) { if (toggle.isSysDarkPrefer) { if (toggle.isLightMode) { toggle.clearMode(); } else { toggle.setLight(); } } else { if (toggle.isDarkMode) { toggle.clearMode(); } else { toggle.setDark(); } } } else { if (toggle.isSysDarkPrefer) { toggle.setLight(); } else { toggle.setDark(); } } toggle.notify(); } /* flipMode() */ </script>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body data-spy="scroll" data-target="#toc" data-topbar-visible="true">
+<div id="sidebar" class="d-flex flex-column align-items-end">
+<div class="profile-wrapper text-center">
+<div id="avatar"> <a href="/" class="mx-auto"> <img src="/assets/config/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a>
+</div>
+<div class="site-title"> <a href="/">FZJ</a>
+</div>
+<div class="site-subtitle font-italic">这里是FZJ的博客～</div>
+</div>
+<ul class="w-100">
+<li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>首页</span> </a>
+</li>
+<li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>分类</span> </a>
+</li>
+<li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>标签</span> </a>
+</li>
+<li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>归档</span> </a>
+</li>
+<li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3 unloaded"></i> <span>关于</span> </a>
+</li>
+</ul>
+<div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center align-items-center"> <button class="mode-toggle btn" aria-label="Switch Mode"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/FZJJJ" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github"></i> </a> <a href="https://twitter.com/twitter_username" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href="javascript:location.href%20=%20'mailto:'%20+%20%5B'2919839271','qq.com'%5D.join('@')" aria-label="email"> <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss"> <i class="fas fa-rss"></i> </a>
+</div>
+</div>
+<div id="topbar-wrapper"><div id="topbar" class="container d-flex align-items-center justify-content-between h-100 pl-3 pr-3 pl-md-4 pr-md-4"> <span id="breadcrumb"> <span> <a href="/"> 首页 </a> </span> <span>前端基础学习笔记</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> 文章</div>
+<i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="搜索..."> </span> <span id="search-cancel">取消</span>
+</div></div>
+<div id="main-wrapper" class="d-flex justify-content-center">
+<div id="main" class="container pl-xl-4 pr-xl-4">
+<div class="row">
+<div id="core-wrapper" class="col-12 col-lg-11 col-xl-9 pr-xl-4"><div class="post pl-1 pr-1 pl-md-2 pr-md-2">
+<h1 data-toc-skip>前端基础学习笔记</h1>
+<div class="post-meta text-muted"> <span> 发表于 <em class="" data-ts="1665014400" data-df="YYYY/MM/DD" data-toggle="tooltip" data-placement="bottom"> 2022/10/06 </em> </span> <span> 更新于 <em class="" data-ts="1665070482" data-df="YYYY/MM/DD" data-toggle="tooltip" data-placement="bottom"> 2022/10/06 </em> </span><div class="d-flex justify-content-between"> <span> 作者 <em> <a href="https://twitter.com/username">FZJJJ</a> </em> </span><div> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="5247 字"> <em>29 分钟</em>阅读</span>
+</div>
+</div>
+</div>
+<div class="post-content">
+<h2 id="html基础标签学习路径">
+<span class="mr-2">HTML基础——标签学习路径</span><a href="#html%E5%9F%BA%E7%A1%80%E6%A0%87%E7%AD%BE%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<h3 id="基本标签">
+<span class="mr-2">基本标签</span><a href="#%E5%9F%BA%E6%9C%AC%E6%A0%87%E7%AD%BE" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<ol>
+<li><p>排版标签</p></li>
+<li><p>文本格式化标签</p></li>
+<li>
+<p>媒体标签</p>
+<ol>
+<li>
+<p>图片标签</p>
+<p><code class="language-plaintext highlighter-rouge">&lt;img&gt;</code>其属性有src路径、alt图片无法显示时的展示内容、title鼠标悬停的显示、width（height）宽（高）</p>
+</li>
+<li><p>路径</p></li>
+<li>
+<p>音频标签</p>
+<p><code class="language-plaintext highlighter-rouge">&lt;audio&gt;</code>其属性有src路径、controls播放控件、autoplay自动播放（部分浏览器兼容，chrome不可以）、loop循环播放</p>
+</li>
+<li>
+<p>视频标签</p>
+<p><code class="language-plaintext highlighter-rouge">&lt;video&gt;</code>其属性同音频类似，autoplay属性在chrome下必须配合muted实现静音自动播放</p>
+</li>
+</ol>
+</li>
+<li>
+<p>链接标签</p>
+<p>超链接、a标签<code class="language-plaintext highlighter-rouge">&lt;a&gt;&lt;/a&gt;</code>其属性主要是href需跳转的链接，在没有目标链接的时候可以先用#代替</p>
+<p>可以用属性target来控制新网页的打开方式，<code class="language-plaintext highlighter-rouge">_slef</code>代表在当前页跳转，<code class="language-plaintext highlighter-rouge">_blank</code>代表在新的一页打开</p>
+</li>
+</ol>
+<h3 id="列表标签">
+<span class="mr-2"><strong>列表标签</strong></span><a href="#%E5%88%97%E8%A1%A8%E6%A0%87%E7%AD%BE" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<ol><li>无序列表</li></ol>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">标签名</th>
+<th style="text-align: center">说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">ul</td>
+<td style="text-align: center">表示无序列表的整理，用来包裹li标签</td>
+</tr>
+<tr>
+<td style="text-align: center">li</td>
+<td style="text-align: center">表示无序列表中的每一项，用于包含每一行的内容</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>列表前每一项默认显示圆点</li>
+<li>ul标签中只允许包含li标签</li>
+<li>li标签可包含任何内容</li>
+</ul>
+<ol><li>有序列表</li></ol>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">标签名</th>
+<th style="text-align: center">说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">ol</td>
+<td style="text-align: center">表示有序列表的整体，用来包裹li标签</td>
+</tr>
+<tr>
+<td style="text-align: center">li</td>
+<td style="text-align: center">表示有序列表的每一项，用来包含每一个的内容</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>特点：</strong></p>
+<ul>
+<li>每一项默认显示序号标识</li>
+<li>ol标签只包含li标签</li>
+<li>li标签可包含任何内容</li>
+</ul>
+<ol><li>自定义列表</li></ol>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">标签名</th>
+<th style="text-align: center">说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">dl</td>
+<td style="text-align: center">表示自定义列表的整体，用来包裹dt/dd标签</td>
+</tr>
+<tr>
+<td style="text-align: center">dt</td>
+<td style="text-align: center">表示自定义列表的主题</td>
+</tr>
+<tr>
+<td style="text-align: center">dd</td>
+<td style="text-align: center">表示自定义列表针对主题的每一项内容</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>特点：</strong></p>
+<ul>
+<li>dd前默认缩进</li>
+<li>dl标签只得包含dt/dd标签</li>
+<li>dt/dd标签可包含任何内容</li>
+</ul>
+<h3 id="表格标签">
+<span class="mr-2">表格标签</span><a href="#%E8%A1%A8%E6%A0%BC%E6%A0%87%E7%AD%BE" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">标签名</th>
+<th style="text-align: center">说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">table</td>
+<td style="text-align: center">表格整体，可用于包裹多个tr（table row）</td>
+</tr>
+<tr>
+<td style="text-align: center">tr（table row）</td>
+<td style="text-align: center">表格每行，可用于包裹td</td>
+</tr>
+<tr>
+<td style="text-align: center">td</td>
+<td style="text-align: center">表格单元格，用于包裹内容</td>
+</tr>
+</tbody>
+</table></div>
+<p>相关属性：</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">属性名</th>
+<th style="text-align: center">属性值</th>
+<th style="text-align: center">效果</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">border</td>
+<td style="text-align: center">数字</td>
+<td style="text-align: center">边框宽度</td>
+</tr>
+<tr>
+<td style="text-align: center">width</td>
+<td style="text-align: center">数字</td>
+<td style="text-align: center">表格宽度</td>
+</tr>
+<tr>
+<td style="text-align: center">height</td>
+<td style="text-align: center">数字</td>
+<td style="text-align: center">表格高度</td>
+</tr>
+</tbody>
+</table></div>
+<p>表格标题和表头</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">标签名</th>
+<th style="text-align: center">名称</th>
+<th style="text-align: center">说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">caption</td>
+<td style="text-align: center">表格大标题</td>
+<td style="text-align: center">整体的标题，默认在整体顶部居中显示</td>
+</tr>
+<tr>
+<td style="text-align: center">th(取代td的位置)</td>
+<td style="text-align: center">表头单元格</td>
+<td style="text-align: center">常用于表格第一行，默认加粗</td>
+</tr>
+</tbody>
+</table></div>
+<p>表格结构标签</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">标签名</th>
+<th style="text-align: center">名称</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">thead</td>
+<td style="text-align: center">表格头部</td>
+</tr>
+<tr>
+<td style="text-align: center">tbody</td>
+<td style="text-align: center">表格主体</td>
+</tr>
+<tr>
+<td style="text-align: center">tfoot</td>
+<td style="text-align: center">表格底部</td>
+</tr>
+</tbody>
+</table></div>
+<p>合并单元格</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">属性名</th>
+<th style="text-align: center">属性值</th>
+<th style="text-align: center">说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">rowspan</td>
+<td style="text-align: center">合并单元格的个数</td>
+<td style="text-align: center">跨行合并，将多行的垂直合并</td>
+</tr>
+<tr>
+<td style="text-align: center">colspan</td>
+<td style="text-align: center">合并单元格的个数</td>
+<td style="text-align: center">跨列合并，将多列的水平合并</td>
+</tr>
+</tbody>
+</table></div>
+<p>注意不能跨结构标签合并</p>
+<p>注意合并的原则为<strong>左上</strong>原则，即保留左边的和上面的</p>
+<h3 id="表单标签">
+<span class="mr-2">表单标签</span><a href="#%E8%A1%A8%E5%8D%95%E6%A0%87%E7%AD%BE" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<h4 id="input标签">
+<span class="mr-2">input标签</span><a href="#input%E6%A0%87%E7%AD%BE" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">标签名</th>
+<th style="text-align: center">type属性值</th>
+<th style="text-align: center">说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">input</td>
+<td style="text-align: center">text</td>
+<td style="text-align: center">文本框，用于输入单行文本</td>
+</tr>
+<tr>
+<td style="text-align: center">input</td>
+<td style="text-align: center">password</td>
+<td style="text-align: center">密码框，用于输入密码</td>
+</tr>
+<tr>
+<td style="text-align: center">input</td>
+<td style="text-align: center">radio</td>
+<td style="text-align: center">单选框，用于多选一</td>
+</tr>
+<tr>
+<td style="text-align: center">input</td>
+<td style="text-align: center">checkbox</td>
+<td style="text-align: center">多选框，用于多选多</td>
+</tr>
+<tr>
+<td style="text-align: center">input</td>
+<td style="text-align: center">file</td>
+<td style="text-align: center">文件选择，用于上传文件</td>
+</tr>
+<tr>
+<td style="text-align: center">input</td>
+<td style="text-align: center">submit</td>
+<td style="text-align: center">提交按钮，用于提交</td>
+</tr>
+<tr>
+<td style="text-align: center">input</td>
+<td style="text-align: center">reset</td>
+<td style="text-align: center">重置按钮，用于重置</td>
+</tr>
+<tr>
+<td style="text-align: center">input</td>
+<td style="text-align: center">button</td>
+<td style="text-align: center">普通按钮，默认无功能，配合js添加功能</td>
+</tr>
+</tbody>
+</table></div>
+<p>text、password常用属性：</p>
+<ul><li>
+<code class="language-plaintext highlighter-rouge">placehold</code>实现输入提示</li></ul>
+<p>radio常用属性：</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">属性名</th>
+<th style="text-align: center">说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">name</td>
+<td style="text-align: center">分组，相同name属性的单选框为一组，同时只能有一个被选中</td>
+</tr>
+<tr>
+<td style="text-align: center">checked</td>
+<td style="text-align: center">默认选中</td>
+</tr>
+</tbody>
+</table></div>
+<p>file常用属性：</p>
+<ul><li>
+<code class="language-plaintext highlighter-rouge">multiple</code>实现多个文件的选择</li></ul>
+<p>submit、reset、button等需要配合<code class="language-plaintext highlighter-rouge">form</code>标签来指示出作用域</p>
+<h4 id="button标签">
+<span class="mr-2">button标签</span><a href="#button%E6%A0%87%E7%AD%BE" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">标签名</th>
+<th style="text-align: center">type属性值</th>
+<th style="text-align: center">说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">button</td>
+<td style="text-align: center">submit</td>
+<td style="text-align: center">提交按钮</td>
+</tr>
+<tr>
+<td style="text-align: center">button</td>
+<td style="text-align: center">reset</td>
+<td style="text-align: center">重置按钮</td>
+</tr>
+<tr>
+<td style="text-align: center">button</td>
+<td style="text-align: center">button</td>
+<td style="text-align: center">普通按钮，默认无功能</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="表单标签-1">
+<span class="mr-2">表单标签</span><a href="#%E8%A1%A8%E5%8D%95%E6%A0%87%E7%AD%BE-1" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<ul>
+<li>select标签：下拉菜单的整体</li>
+<li>option标签：下拉菜单的每一项</li>
+<li>常见属性selected，代表下拉菜单的默认选中</li>
+</ul>
+<h4 id="文本域标签">
+<span class="mr-2">文本域标签</span><a href="#%E6%96%87%E6%9C%AC%E5%9F%9F%E6%A0%87%E7%AD%BE" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<blockquote><p>在网页中提供可输入多行文本的表单控件</p></blockquote>
+<p>标签名：textarea</p>
+<p>常见属性：</p>
+<ul>
+<li>cols：规定文本域可见宽度</li>
+<li>rows：规定文本域可见行数</li>
+</ul>
+<p>注意：</p>
+<ul>
+<li>右下角可以拖拽改变大小</li>
+<li>实际开发时针对样式效果推荐使用<strong>css设置</strong>
+</li>
+</ul>
+<h4 id="label标签">
+<span class="mr-2">label标签</span><a href="#label%E6%A0%87%E7%AD%BE" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<blockquote><p>常用于绑定内容于表单标签的关系</p></blockquote>
+<p>有两种方法：</p>
+<ol>
+<li>label把文本包起来，在表单标签上添加id属性，在label标签添加for属性，两者属性值相同即可</li>
+<li>直接用label标签把表单标签连同文本一起包裹起来，不需要for属性</li>
+</ol>
+<h3 id="语义化标签">
+<span class="mr-2">语义化标签</span><a href="#%E8%AF%AD%E4%B9%89%E5%8C%96%E6%A0%87%E7%AD%BE" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<blockquote><p>div和span标签</p></blockquote>
+<p>div标签：一行只显示一个</p>
+<ul><li>基本是网页布局时用到，会出现很多div，所以用css时要用类名控制，不要用标签控制</li></ul>
+<p>span标签：一行可以显示多个</p>
+<p>一些有语义的布局标签（手机网页）：</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">标签名</th>
+<th style="text-align: center">语义</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">header</td>
+<td style="text-align: center">网页头部</td>
+</tr>
+<tr>
+<td style="text-align: center">nav</td>
+<td style="text-align: center">网页导航</td>
+</tr>
+<tr>
+<td style="text-align: center">footer</td>
+<td style="text-align: center">网页底部</td>
+</tr>
+<tr>
+<td style="text-align: center">aside</td>
+<td style="text-align: center">网页侧边框</td>
+</tr>
+<tr>
+<td style="text-align: center">section</td>
+<td style="text-align: center">网页区块</td>
+</tr>
+<tr>
+<td style="text-align: center">article</td>
+<td style="text-align: center">网页文章</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="字符实体">
+<span class="mr-2">字符实体</span><a href="#%E5%AD%97%E7%AC%A6%E5%AE%9E%E4%BD%93" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">显示结果</th>
+<th style="text-align: center">描述</th>
+<th style="text-align: center">实体名称(后面再加上;)</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center"> </td>
+<td style="text-align: center">空格</td>
+<td style="text-align: center">&amp;nbsp</td>
+</tr>
+<tr>
+<td style="text-align: center">&lt;</td>
+<td style="text-align: center">小于号</td>
+<td style="text-align: center">&amp;lt</td>
+</tr>
+<tr>
+<td style="text-align: center">
+<blockquote>
+
+</blockquote>
+</td>
+<td style="text-align: center">大于号</td>
+<td style="text-align: center">&amp;gt</td>
+</tr>
+<tr>
+<td style="text-align: center">&amp;</td>
+<td style="text-align: center">和号</td>
+<td style="text-align: center">&amp;amp</td>
+</tr>
+<tr>
+<td style="text-align: center">”</td>
+<td style="text-align: center">引号</td>
+<td style="text-align: center">&amp;quot</td>
+</tr>
+<tr>
+<td style="text-align: center">’</td>
+<td style="text-align: center">撇号</td>
+<td style="text-align: center">&amp;apos（ie不支持）</td>
+</tr>
+<tr>
+<td style="text-align: center"> </td>
+<td style="text-align: center">分（cent）</td>
+<td style="text-align: center">&amp;cent</td>
+</tr>
+<tr>
+<td style="text-align: center"> </td>
+<td style="text-align: center">镑（pound）</td>
+<td style="text-align: center">&amp;pound</td>
+</tr>
+<tr>
+<td style="text-align: center">¥</td>
+<td style="text-align: center">元</td>
+<td style="text-align: center">&amp;yen</td>
+</tr>
+<tr>
+<td style="text-align: center"> </td>
+<td style="text-align: center">欧元</td>
+<td style="text-align: center">&amp;euro</td>
+</tr>
+<tr>
+<td style="text-align: center"> </td>
+<td style="text-align: center">小节</td>
+<td style="text-align: center">&amp;sect</td>
+</tr>
+<tr>
+<td style="text-align: center">©️</td>
+<td style="text-align: center">版权</td>
+<td style="text-align: center">&amp;copy</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="css基础">
+<span class="mr-2">CSS基础</span><a href="#css%E5%9F%BA%E7%A1%80" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<ul><li>css一般写在style标签中，该标签一般写在head标签里，title标签下面</li></ul>
+<p><strong>引入方式：</strong></p>
+<ol>
+<li>内嵌式：css写在style标签中。一般通常约定写在<strong>head</strong>标签里</li>
+<li>外联式：css写在一个单独的.css文件中，需要通过link标签在网页中引入</li>
+<li>行内式：css写在标签的style属性中，一般配合js使用</li>
+</ol>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">引入方式</th>
+<th style="text-align: center">作用范围</th>
+<th style="text-align: center">使用场景</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">内嵌式</td>
+<td style="text-align: center">当前页面</td>
+<td style="text-align: center">小案例</td>
+</tr>
+<tr>
+<td style="text-align: center">外联式</td>
+<td style="text-align: center">多个页面</td>
+<td style="text-align: center">项目中</td>
+</tr>
+<tr>
+<td style="text-align: center">行内式</td>
+<td style="text-align: center">当前标签</td>
+<td style="text-align: center">配合js使用</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="选择器">
+<span class="mr-2">选择器</span><a href="#%E9%80%89%E6%8B%A9%E5%99%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<h4 id="1标签选择器">
+<span class="mr-2">1、标签选择器</span><a href="#1%E6%A0%87%E7%AD%BE%E9%80%89%E6%8B%A9%E5%99%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<h4 id="2类选择器">
+<span class="mr-2">2、类选择器</span><a href="#2%E7%B1%BB%E9%80%89%E6%8B%A9%E5%99%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<ul>
+<li>结构：<strong>.类名</strong>{css属性名:属性值;}</li>
+<li>可以通过类名找到页面所有带有这个类名的标签设置样式</li>
+</ul>
+<p>注意：类名不能以数字或者中划线开头</p>
+<p>一个标签可以使用多个类名</p>
+<h4 id="3id选择器">
+<span class="mr-2">3、ID选择器</span><a href="#3id%E9%80%89%E6%8B%A9%E5%99%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<ul>
+<li>结构：#id属性值{css属性名：属性值;}</li>
+<li>可以通过类名找到页面所有带有这个类名的标签设置样式</li>
+</ul>
+<p>注意：</p>
+<p>所有标签都有id属性</p>
+<p>id属性在页面中唯一，不可重复</p>
+<p>一个标签上只可以有一个id属性值</p>
+<p>一个id选择器只可以选中一个标签</p>
+<p>一般id选择器不用来做美化效果，配合js使用</p>
+<h4 id="4通配符选择器">
+<span class="mr-2">4、通配符选择器</span><a href="#4%E9%80%9A%E9%85%8D%E7%AC%A6%E9%80%89%E6%8B%A9%E5%99%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<ul>
+<li>结构：*{css属性名：属性值;}</li>
+<li>找到页面中所有的标签，设置样式</li>
+</ul>
+<p>注意：</p>
+<p>开发中应用极少，极特殊情况下才用得到</p>
+<h3 id="字体和文本样式">
+<span class="mr-2">字体和文本样式</span><a href="#%E5%AD%97%E4%BD%93%E5%92%8C%E6%96%87%E6%9C%AC%E6%A0%B7%E5%BC%8F" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<h4 id="1字体样式">
+<span class="mr-2">1、字体样式</span><a href="#1%E5%AD%97%E4%BD%93%E6%A0%B7%E5%BC%8F" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>文字基本样式：</p>
+<p>font-style，font-weight，font-size，font-family</p>
+<p>font复合属性：</p>
+<p><code class="language-plaintext highlighter-rouge">font:style weight size family</code></p>
+<p>省略时只能省略前两个属性，相当于设置了默认值</p>
+<h4 id="2文本样式">
+<span class="mr-2">2、文本样式</span><a href="#2%E6%96%87%E6%9C%AC%E6%A0%B7%E5%BC%8F" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<ul><li>文本缩进：</li></ul>
+<p><code class="language-plaintext highlighter-rouge">text-indent</code></p>
+<p>取值：数字+px或者数字+em（推荐这个，1em=当前标签的font-size大小）</p>
+<ul><li>文本水平对齐方式：</li></ul>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">标签</th>
+<th style="text-align: center">属性值</th>
+<th style="text-align: center">效果</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">text-align</td>
+<td style="text-align: center">left</td>
+<td style="text-align: center">左对齐</td>
+</tr>
+<tr>
+<td style="text-align: center">text-align</td>
+<td style="text-align: center">right</td>
+<td style="text-align: center">右对齐</td>
+</tr>
+<tr>
+<td style="text-align: center">text-align</td>
+<td style="text-align: center">center</td>
+<td style="text-align: center">中心对齐</td>
+</tr>
+</tbody>
+</table></div>
+<p>其可以作用于：</p>
+<ol>
+<li>文本</li>
+<li>span标签、a标签</li>
+<li>input标签，img标签</li>
+</ol>
+<ul><li>文本修饰</li></ul>
+<p>属性名：<code class="language-plaintext highlighter-rouge">text-decoration</code></p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">属性值</th>
+<th style="text-align: center">效果</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">underline</td>
+<td style="text-align: center">下划线（常用）</td>
+</tr>
+<tr>
+<td style="text-align: center">line-through</td>
+<td style="text-align: center">删除线（不常用）</td>
+</tr>
+<tr>
+<td style="text-align: center">overline</td>
+<td style="text-align: center">上划线（几乎不用）</td>
+</tr>
+<tr>
+<td style="text-align: center">none</td>
+<td style="text-align: center">无装饰线（常用）</td>
+</tr>
+</tbody>
+</table></div>
+<ul><li>行高</li></ul>
+<p>属性名：<code class="language-plaintext highlighter-rouge">line-height</code></p>
+<p>取值：数字+px或者直接数字（font-size的倍数）</p>
+<p>注意：font写复合属性时 <code class="language-plaintext highlighter-rouge">font:style weight size/height family</code></p>
+<h4 id="3拓展">
+<span class="mr-2">3、拓展</span><a href="#3%E6%8B%93%E5%B1%95" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>颜色常见取值</p>
+<ul><li>color、background-color</li></ul>
+<p>属性值</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">表示方式</th>
+<th style="text-align: center">表示含义</th>
+<th style="text-align: center">属性值</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">关键词</td>
+<td style="text-align: center">预定义的颜色</td>
+<td style="text-align: center">red、gren、blue、yellow</td>
+</tr>
+<tr>
+<td style="text-align: center">rgb表示</td>
+<td style="text-align: center">每项0～255</td>
+<td style="text-align: center">rgb(0,0,0), rgb(255,0,0)</td>
+</tr>
+<tr>
+<td style="text-align: center">rgba表示</td>
+<td style="text-align: center">三原色加a为透明度，a范围0～1</td>
+<td style="text-align: center">rgba(255,255,255,1)</td>
+</tr>
+<tr>
+<td style="text-align: center">十六进制表示</td>
+<td style="text-align: center">#开头，数字转化为16进制</td>
+<td style="text-align: center">#000000，#ff0000（可简写#000，#f00）</td>
+</tr>
+</tbody>
+</table></div>
+<p><code class="language-plaintext highlighter-rouge">margin: 0 auto</code>可以让标签居中</p>
+<h2 id="css进阶">
+<span class="mr-2">CSS进阶</span><a href="#css%E8%BF%9B%E9%98%B6" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<h3 id="选择器进阶">
+<span class="mr-2">选择器进阶</span><a href="#%E9%80%89%E6%8B%A9%E5%99%A8%E8%BF%9B%E9%98%B6" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<h4 id="11-后代选择器">
+<span class="mr-2">1.1 后代选择器</span><a href="#11-%E5%90%8E%E4%BB%A3%E9%80%89%E6%8B%A9%E5%99%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>作用：根据标签嵌套关系，选择父元素后代中满足条件的元素</p>
+<ul><li>语法：选择器1 选择器2 {css}</li></ul>
+<p>注意：后代包括任何的后代（子，孙，重孙），选择器之间用空格隔开</p>
+<h4 id="12-子代选择器">
+<span class="mr-2">1.2 子代选择器</span><a href="#12-%E5%AD%90%E4%BB%A3%E9%80%89%E6%8B%A9%E5%99%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>原理同上，语法为：选择器1&gt;选择器2{css}</p>
+<p>注意：此时只能选择子代，孙子代无法选择</p>
+<h4 id="21-并集选择器">
+<span class="mr-2">2.1 并集选择器</span><a href="#21-%E5%B9%B6%E9%9B%86%E9%80%89%E6%8B%A9%E5%99%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>作用：选择多组标签，设置相同的样式</p>
+<ul><li>语法：选择器1, 选择器2{css}</li></ul>
+<p>注意：</p>
+<p>每组选择器都可以是基础选择器或者是复合选择器</p>
+<p>每组选择器通常一行写一个，提高代码可读性</p>
+<h4 id="22-交集选择器">
+<span class="mr-2">2.2 交集选择器</span><a href="#22-%E4%BA%A4%E9%9B%86%E9%80%89%E6%8B%A9%E5%99%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>作用：选中页面中同时满足多个选择器的标签</p>
+<ul><li>语法：选择器1选择器2{css}</li></ul>
+<p>注意：交集选择器中如果有标签选择器，则标签选择器必须写在最前面</p>
+<h4 id="3-hover伪类选择器">
+<span class="mr-2">3 hover伪类选择器</span><a href="#3-hover%E4%BC%AA%E7%B1%BB%E9%80%89%E6%8B%A9%E5%99%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>作用：选中鼠标<strong>悬停</strong>在元素上的状态，设置样式</p>
+<ul><li>语法：选择器:hover{css}</li></ul>
+<h4 id="4-emmet语法">
+<span class="mr-2">4 emmet语法</span><a href="#4-emmet%E8%AF%AD%E6%B3%95" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>作用：通过简写语法，快速生成代码</p>
+<p>语法：</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">记忆</th>
+<th style="text-align: center">示例</th>
+<th style="text-align: center">效果</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">标签名</td>
+<td style="text-align: center">div</td>
+<td style="text-align: center"><code class="language-plaintext highlighter-rouge">&lt;div&gt;&lt;/div&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align: center">类选择器</td>
+<td style="text-align: center">.red</td>
+<td style="text-align: center"><code class="language-plaintext highlighter-rouge">&lt;div class="red"&gt;&lt;/div&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align: center">id选择器</td>
+<td style="text-align: center">#one</td>
+<td style="text-align: center"><code class="language-plaintext highlighter-rouge">&lt;div id="one"&gt;&lt;/div&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align: center">交集选择器</td>
+<td style="text-align: center">p.red#one</td>
+<td style="text-align: center"><code class="language-plaintext highlighter-rouge">&lt;p class="red" id="one"&gt;&lt;/p&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align: center">子代选择器</td>
+<td style="text-align: center">ul&gt;li</td>
+<td style="text-align: center"><code class="language-plaintext highlighter-rouge">&lt;ul&gt;&lt;li&gt;&lt;/li&gt;&lt;/ul&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align: center">内部文本</td>
+<td style="text-align: center">ul&gt;li{内容}</td>
+<td style="text-align: center"><code class="language-plaintext highlighter-rouge">&lt;ul&gt;&lt;li&gt;内容&lt;/li&gt;&lt;/ul&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align: center">创建多个</td>
+<td style="text-align: center">ul&gt;li*3</td>
+<td style="text-align: center"><code class="language-plaintext highlighter-rouge">&lt;ul&gt;&lt;li&gt;&lt;/li&gt;&lt;li&gt;&lt;/li&gt;&lt;li&gt;&lt;/li&gt;&lt;/ul&gt;</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="背景相关属性bgc">
+<span class="mr-2">背景相关属性bgc</span><a href="#%E8%83%8C%E6%99%AF%E7%9B%B8%E5%85%B3%E5%B1%9E%E6%80%A7bgc" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>bgi（背景图片）</p>
+<p>注意：背景图中url可以省略引号</p>
+<p>如果想不让图片重复出现，那就bgr（repeat）</p>
+<p>属性值：</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">取值</th>
+<th style="text-align: center">效果</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">repeat（默认值）</td>
+<td style="text-align: center">平铺</td>
+</tr>
+<tr>
+<td style="text-align: center">no-repaet</td>
+<td style="text-align: center">不平铺</td>
+</tr>
+<tr>
+<td style="text-align: center">repeat-x</td>
+<td style="text-align: center">横向平铺</td>
+</tr>
+<tr>
+<td style="text-align: center">repeat-y</td>
+<td style="text-align: center">纵向平铺</td>
+</tr>
+</tbody>
+</table></div>
+<p>控制图片平铺的位置：bgp（position）</p>
+<p>属性值（水平方向+竖直方向）：</p>
+<ol><li>方位名词</li></ol>
+<p>left、center、right/top、center、bottom</p>
+<ol><li>数字+px（坐标）</li></ol>
+<p>注意原点为盒子左上角，x轴向右，y轴向下</p>
+<p><strong>关于符合属性的连写</strong>：</p>
+<p>background：color image repeat position</p>
+<h3 id="元素显示模式">
+<span class="mr-2">元素显示模式</span><a href="#%E5%85%83%E7%B4%A0%E6%98%BE%E7%A4%BA%E6%A8%A1%E5%BC%8F" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<h4 id="1块级元素">
+<span class="mr-2">1、块级元素</span><a href="#1%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>显示特点：</p>
+<ol>
+<li>独占一行</li>
+<li>默认宽度为父元素的宽度，高度默认由内容撑开</li>
+<li><strong>可以设置宽高</strong></li>
+</ol>
+<ul><li>代表标签：<strong>div、p、h系列</strong>，ul、li、dl、dt、form、header、nav、footer</li></ul>
+<h4 id="2行内元素">
+<span class="mr-2">2、行内元素</span><a href="#2%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>显示特点：</p>
+<ol>
+<li>一行可以显示多个</li>
+<li>宽度和高度默认由内容撑开</li>
+<li><strong>不可以设置宽高</strong></li>
+</ol>
+<ul><li>代表标签：<strong>a、span</strong>、b、u、i、s、strong、ins、em、del等</li></ul>
+<h4 id="3行内块元素">
+<span class="mr-2">3、行内块元素</span><a href="#3%E8%A1%8C%E5%86%85%E5%9D%97%E5%85%83%E7%B4%A0" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>显示特点：</p>
+<ol>
+<li>一行可以显示多个</li>
+<li>可以设置宽高</li>
+</ol>
+<ul>
+<li>代表标签：input、textarea、button、select等</li>
+<li>特殊情况：img标签有行内块元素特点，但是chrome调试显示为行内元素</li>
+</ul>
+<h4 id="4显示模式转换">
+<span class="mr-2">4、显示模式转换</span><a href="#4%E6%98%BE%E7%A4%BA%E6%A8%A1%E5%BC%8F%E8%BD%AC%E6%8D%A2" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>目的：改变元素默认的显示特点，让元素符合布局要求</p>
+<p>语法：</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">属性</th>
+<th style="text-align: center">效果</th>
+<th style="text-align: center">使用频率</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center"><code class="language-plaintext highlighter-rouge">display:block</code></td>
+<td style="text-align: center">转换成块级元素</td>
+<td style="text-align: center">较多</td>
+</tr>
+<tr>
+<td style="text-align: center"><code class="language-plaintext highlighter-rouge">display:inline-block</code></td>
+<td style="text-align: center">转换成行内块元素</td>
+<td style="text-align: center">较多</td>
+</tr>
+<tr>
+<td style="text-align: center"><code class="language-plaintext highlighter-rouge">display:inline</code></td>
+<td style="text-align: center">转换成行内元素</td>
+<td style="text-align: center">极少</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="5拓展">
+<span class="mr-2">5、拓展</span><a href="#5%E6%8B%93%E5%B1%95" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<ol><li>块级元素一般作为大容器，可以嵌套：文本、块级元素、行内元素、行内块元素等</li></ol>
+<p>但是p标签不要嵌套div、p、h等块级元素</p>
+<ol><li>a标签可以嵌套任意的标签</li></ol>
+<p>但是不可以嵌套a标签</p>
+<h3 id="css特性">
+<span class="mr-2">css特性</span><a href="#css%E7%89%B9%E6%80%A7" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<h4 id="1继承性">
+<span class="mr-2">1、继承性</span><a href="#1%E7%BB%A7%E6%89%BF%E6%80%A7" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<blockquote><p>一般来说，关于文字的都能继承，关于标签本身的无法继承</p></blockquote>
+<p>子元素有默认继承父元素样式的特点</p>
+<p>常见可继承的属性有：</p>
+<ol>
+<li>color</li>
+<li>font-size、font-style、font-weight、font-family</li>
+<li>text-indent、text-align</li>
+<li>line-height</li>
+</ol>
+<p>注意事项：</p>
+<p>浏览器本身有默认属性的元素不会继承</p>
+<ol>
+<li>a标签的color继承会失效</li>
+<li>h系列标签的font-size会继承失效</li>
+</ol>
+<h4 id="2层叠性">
+<span class="mr-2">2、层叠性</span><a href="#2%E5%B1%82%E5%8F%A0%E6%80%A7" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>给同一标签设置不同的样式，样式会层层叠加，共同作用在标签上；</p>
+<p>给同一标签设置相同的样式，样式会层叠覆盖，最后一个样式作用在标签上</p>
+<p>注意：</p>
+<ol><li>样式冲突时，只有选择器优先级相同，才可以用层叠性判断结果</li></ol>
+<h4 id="3优先性">
+<span class="mr-2">3、优先性</span><a href="#3%E4%BC%98%E5%85%88%E6%80%A7" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<h5 id="优先级">
+<span class="mr-2">优先级</span><a href="#%E4%BC%98%E5%85%88%E7%BA%A7" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h5>
+<p>不同的选择器有不同的优先级，优先级高的选择器样式会覆盖优先级低的选择器样式</p>
+<p>优先级公式：</p>
+<p><strong>继承 &lt; 通配符选择器 &lt; 标签选择器 &lt; 类选择器 &lt; id选择器 &lt; 行内样式 &lt; !important</strong></p>
+<p>越精准优先级越高</p>
+<p>注意：</p>
+<ol>
+<li>!important写在属性值的后面</li>
+<li>!important无法提升继承的优先级，<strong>只要是继承，优先级一定最低</strong>
+</li>
+<li>实际开发不建议用!important</li>
+</ol>
+<h5 id="权重叠加计算">
+<span class="mr-2">权重叠加计算</span><a href="#%E6%9D%83%E9%87%8D%E5%8F%A0%E5%8A%A0%E8%AE%A1%E7%AE%97" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h5>
+<p>场景：如果是复合选择器，需要通过权重叠加计算方法，判断那个选择器优先级最高会生效</p>
+<p>计算公式：</p>
+<p>（行内样式个数，id选择器个数，类选择器个数，标签选择器个数）</p>
+<p>按级别依次向下比较</p>
+<p>!important如果不是继承，则永远权重最高，生效</p>
+<h3 id="盒子模型">
+<span class="mr-2">盒子模型</span><a href="#%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>概念：</p>
+<ol>
+<li>页面每一个标签，都可以看作一个盒子，以盒子视角进行布局</li>
+<li>浏览器渲染网页时，会将元素看作一个个举行区域，称为盒子</li>
+</ol>
+<p>盒子模型：</p>
+<p>每个盒子分为内容区域（content）、内边距区域（padding）、边框区域（border）、外边距区域（margin）</p>
+<p>注意：padding和border都会撑大盒子</p>
+<p>css3可以有内减模式，自动计算忽略padding和border的撑大，需要添加属性<code class="language-plaintext highlighter-rouge">box-sizing: border-box</code></p>
+<p>有些标签自带margin与padding值，所以一般要清楚一下默认设置，可以通过通配符选择器或者并集选择器</p>
+<h2 id="css浮动">
+<span class="mr-2">CSS浮动</span><a href="#css%E6%B5%AE%E5%8A%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<h3 id="结构伪类选择器">
+<span class="mr-2">结构伪类选择器</span><a href="#%E7%BB%93%E6%9E%84%E4%BC%AA%E7%B1%BB%E9%80%89%E6%8B%A9%E5%99%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<blockquote><p>能够使用结构伪类选择器在HTML中定位元素</p></blockquote>
+<p>减少对类的依赖</p>
+<p>常用语查找某父级选择器中的子元素</p>
+<p>选择器</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">选择器</th>
+<th style="text-align: center">说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">E:first-child{}</td>
+<td style="text-align: center">匹配父元素中第一个子元素，且是E元素</td>
+</tr>
+<tr>
+<td style="text-align: center">E:last-child{}</td>
+<td style="text-align: center">～最后一个子元素，～</td>
+</tr>
+<tr>
+<td style="text-align: center">E:nth-child(n){}</td>
+<td style="text-align: center">～第n个子元素，～</td>
+</tr>
+<tr>
+<td style="text-align: center">E:nth-last-child(n){}</td>
+<td style="text-align: center">～倒数第n个子元素，～</td>
+</tr>
+</tbody>
+</table></div>
+<p>注意：上表中的n除了数字还是可以填公式的（公式里n从0开始）</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">功能</th>
+<th style="text-align: center">公式</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">偶数</td>
+<td style="text-align: center">2n、even</td>
+</tr>
+<tr>
+<td style="text-align: center">奇数</td>
+<td style="text-align: center">2n+1、2n-1、odd</td>
+</tr>
+<tr>
+<td style="text-align: center">找到前五个</td>
+<td style="text-align: center">-n+5</td>
+</tr>
+<tr>
+<td style="text-align: center">找到从第五个往后</td>
+<td style="text-align: center">n+5</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="伪元素">
+<span class="mr-2">伪元素</span><a href="#%E4%BC%AA%E5%85%83%E7%B4%A0" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>一般页面中的<strong>非主体内容</strong>可以使用伪元素</p>
+<p>是由css模拟出的标签效果，与html设置的标签对应</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">伪元素</th>
+<th style="text-align: center">作用</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center"><code class="language-plaintext highlighter-rouge">::before</code></td>
+<td style="text-align: center">在父元素内容最前添加一个伪元素</td>
+</tr>
+<tr>
+<td style="text-align: center"><code class="language-plaintext highlighter-rouge">::after</code></td>
+<td style="text-align: center">在父元素内容最后添加一个伪元素</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="标准流">
+<span class="mr-2">标准流</span><a href="#%E6%A0%87%E5%87%86%E6%B5%81" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>又称文档流，是浏览器在渲染显示网页内容时默认采用的一套排版规则，规定以何种方式排列元素。</p>
+<h3 id="浮动">
+<span class="mr-2">浮动</span><a href="#%E6%B5%AE%E5%8A%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>浮动的作用：早期用作图文环绕，现在用作网页布局</p>
+<p>属性float</p>
+<p>特点：</p>
+<ol>
+<li><p>浮动的标签会脱离标准流（脱标），在标准流中不占位置，相当于覆盖在标准流之上。</p></li>
+<li>浮动元素比标准流高半个级别，可以覆盖标准流的元素</li>
+<li>浮动找浮动，下一个浮动元素会在上一个浮动元素后面左右浮动</li>
+<li>浮动元素有特殊显示效果：一行可设置多个，可设置宽高（行内块特点）。</li>
+</ol>
+<p><strong>注意：设置浮动的时候没法用margin居中，因此可以设置一个父级标签先居中。</strong></p>
+<p><strong>书写顺序（浏览器执行效率更高）：</strong></p>
+<ol>
+<li>浮动/display</li>
+<li>盒子模型：margin/border/padding 宽高背景色等</li>
+<li>文字样式</li>
+</ol>
+<h3 id="清除浮动">
+<span class="mr-2">清除浮动</span><a href="#%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<p>清除浮动给别的标签带来的影响</p>
+<p>如果子元素浮动了，此时子元素不能撑开标准流的块级父元素</p>
+<p>有时候父级不方便加高度，而子级浮动了，此时会产生浮动的影响</p>
+<p><strong>清除浮动方法：</strong></p>
+<ol>
+<li>给父级加上高度</li>
+<li>额外标签法：</li>
+</ol>
+<p>操作：在父元素内容最后加一个块级元素，给添加的块级元素设置clear：both</p>
+<ol><li>单伪元素清除法</li></ol>
+<p>操作：用伪元素代替了方法2中的额外标签</p>
+<div class="language-html highlighter-rouge">
+<div class="code-header"> <span data-label-text="HTML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+<td class="rouge-code"><pre>.clearfix::after{
+	content: '';
+	dispaly: block;
+	clear: both;
+	/*补充，为了兼容性*/
+	height: 0;
+	visiblity: hiddend
+}
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<ol><li>双伪元素清除法（同时解决了浮动问题和外边距塌陷问题）</li></ol>
+<p>操作：</p>
+<div class="language-html highlighter-rouge">
+<div class="code-header"> <span data-label-text="HTML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button>
+</div>
+<div class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+<td class="rouge-code"><pre>.clearfix::before, .clearfix::after{
+	content: '';
+	display: table;
+}
+/*以上用以解决外边距塌陷问题（父子级同为块级，子级加margin会影响父级的位置）*/
+.clearfix::after{
+	clear: both;
+}
+</pre></td>
+</tr></tbody></table></code></div>
+</div>
+<ol><li>最简单方法，直接给父元素设置overflow：hidden</li></ol>
+<h2 id="css定位">
+<span class="mr-2">CSS定位</span><a href="#css%E5%AE%9A%E4%BD%8D" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h2>
+<p>应用场景：</p>
+<ul>
+<li>解决了盒子之间的层叠问题<ul><li>定位之后元素层级最高可以叠在其他盒子上面</li></ul>
+</li>
+<li>可以让盒子始终固定在屏幕中某个位置</li>
+</ul>
+<p>定位步骤：</p>
+<ol>
+<li>
+<p>设置定位方式</p>
+<ul>
+<li>属性名：position</li>
+<li>常见属性值：</li>
+</ul>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">定位方式</th>
+<th style="text-align: center">属性值</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">静态定位</td>
+<td style="text-align: center">static</td>
+</tr>
+<tr>
+<td style="text-align: center">相对定位</td>
+<td style="text-align: center">relative</td>
+</tr>
+<tr>
+<td style="text-align: center">绝对定位</td>
+<td style="text-align: center">absolute</td>
+</tr>
+<tr>
+<td style="text-align: center">固定定位</td>
+<td style="text-align: center">fixed</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>相对定位：<ul>
+<li>依旧占有原来的位置</li>
+<li>仍然具有原来标签的显示模式特点</li>
+<li>该变位置参照自己原来的位置</li>
+<li>同样是“左上”优先，如果同时都有的话以left和top为准</li>
+</ul>
+</li>
+<li>绝对定位：<ul>
+<li>脱标，不占位置了</li>
+<li>会改变标签的显示模式特点：具备了行内块的特点</li>
+<li>以父级的位置为标准，若是父级未定位，则以浏览器窗口为标准（一般父级定位都采用relative）</li>
+<li>子绝父相</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>设置偏移值</p></li>
+</ol>
+<ul>
+<li><p>偏移值一般分两个方向，水平和垂直方向各选用一个使用即可</p></li>
+<li>
+<p>选取的原则一般是就近原则</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">方向</th>
+<th style="text-align: center">属性名</th>
+<th style="text-align: center">属性值</th>
+<th style="text-align: center">含义</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">水平</td>
+<td style="text-align: center">left</td>
+<td style="text-align: center">数字+px</td>
+<td style="text-align: center">距离左边距离</td>
+</tr>
+<tr>
+<td style="text-align: center">水平</td>
+<td style="text-align: center">right</td>
+<td style="text-align: center">数字+px</td>
+<td style="text-align: center">距离右边距离</td>
+</tr>
+<tr>
+<td style="text-align: center">垂直</td>
+<td style="text-align: center">top</td>
+<td style="text-align: center">数字+px</td>
+<td style="text-align: center">距离上边距离</td>
+</tr>
+<tr>
+<td style="text-align: center">垂直</td>
+<td style="text-align: center">bottom</td>
+<td style="text-align: center">数字+px</td>
+<td style="text-align: center">距离下边距离</td>
+</tr>
+</tbody>
+</table></div>
+</li>
+</ul>
+<p>固定定位：</p>
+<p>position：fixed</p>
+<ol>
+<li>脱标，不占位置</li>
+<li>改变位置参考浏览器窗口</li>
+<li>具备行内块的特点</li>
+</ol>
+<p>定位层级：</p>
+<ul>
+<li>标准流 &lt; 浮动 &lt; 定位</li>
+<li>在不同定位之间：<ul>
+<li>相对、绝对、固定默认层级相同</li>
+<li>
+<strong>html</strong>中写在下面的元素层级最高，会覆盖上面的元素</li>
+</ul>
+</li>
+</ul>
+<h3 id="装饰">
+<span class="mr-2">装饰</span><a href="#%E8%A3%85%E9%A5%B0" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h3>
+<h4 id="垂直对齐的方式">
+<span class="mr-2">垂直对齐的方式</span><a href="#%E5%9E%82%E7%9B%B4%E5%AF%B9%E9%BD%90%E7%9A%84%E6%96%B9%E5%BC%8F" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>vertical-align</p>
+<p>属性值：</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">属性值</th>
+<th style="text-align: center">效果</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">baseline</td>
+<td style="text-align: center">默认、基线对齐</td>
+</tr>
+<tr>
+<td style="text-align: center">top</td>
+<td style="text-align: center">顶部对齐</td>
+</tr>
+<tr>
+<td style="text-align: center"><strong>middle</strong></td>
+<td style="text-align: center">中部对齐</td>
+</tr>
+<tr>
+<td style="text-align: center">bottom</td>
+<td style="text-align: center">底部对齐</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="光标类型">
+<span class="mr-2">光标类型</span><a href="#%E5%85%89%E6%A0%87%E7%B1%BB%E5%9E%8B" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>设置鼠标在元素上的显示样式</p>
+<p>属性名：cursor</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">属性值</th>
+<th style="text-align: center">效果</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">default</td>
+<td style="text-align: center">默认值，通常是箭头</td>
+</tr>
+<tr>
+<td style="text-align: center">pointer</td>
+<td style="text-align: center">小手效果，提示用户可点击</td>
+</tr>
+<tr>
+<td style="text-align: center">text</td>
+<td style="text-align: center">工字型，提示用户可选择文字</td>
+</tr>
+<tr>
+<td style="text-align: center">move</td>
+<td style="text-align: center">十字光标，提示用户可以移动</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="边框圆角">
+<span class="mr-2">边框圆角</span><a href="#%E8%BE%B9%E6%A1%86%E5%9C%86%E8%A7%92" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>让盒子四角变圆润，增加页面细节</p>
+<p>属性名：border-radius</p>
+<p>常见取值：数字+px，百分比（类似于画图里的倒角）</p>
+<p>赋值规则：从左上角开始，没赋值的看对角</p>
+<p>常见应用：</p>
+<ul>
+<li><p>画一个正圆： 正方形盒子+设置圆角半径为正方形边长的一半</p></li>
+<li>
+<p>胶囊按钮：</p>
+<p>长方形盒子+设置圆角半径为盒子高度的一半</p>
+</li>
+</ul>
+<h4 id="overflow溢出部分显示效果">
+<span class="mr-2">overflow溢出部分显示效果</span><a href="#overflow%E6%BA%A2%E5%87%BA%E9%83%A8%E5%88%86%E6%98%BE%E7%A4%BA%E6%95%88%E6%9E%9C" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>指盒子内容部分所超出盒子范围的区域</p>
+<p>如：显示、隐藏、滚动条。。。</p>
+<p>属性名：overflow</p>
+<p>常见属性值：</p>
+<div class="table-wrapper"><table>
+<thead><tr>
+<th style="text-align: center">属性值</th>
+<th style="text-align: center">效果</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align: center">visible</td>
+<td style="text-align: center">默认值，溢出部分可见</td>
+</tr>
+<tr>
+<td style="text-align: center">hidden</td>
+<td style="text-align: center">溢出部分隐藏</td>
+</tr>
+<tr>
+<td style="text-align: center">scroll</td>
+<td style="text-align: center">不论是否溢出，都显示滚动条</td>
+</tr>
+<tr>
+<td style="text-align: center">auto</td>
+<td style="text-align: center">根据是否溢出，自动显示或隐藏滚动条</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="元素本身隐藏">
+<span class="mr-2">元素本身隐藏</span><a href="#%E5%85%83%E7%B4%A0%E6%9C%AC%E8%BA%AB%E9%9A%90%E8%97%8F" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>让某元素在屏幕中不可见</p>
+<p>常见属性：</p>
+<ul>
+<li>visibility：hidden</li>
+<li>display：none</li>
+</ul>
+<p>区别：</p>
+<p>前者为占位隐藏，后者是不占位隐藏</p>
+<h4 id="元素整体透明度">
+<span class="mr-2">元素整体透明度</span><a href="#%E5%85%83%E7%B4%A0%E6%95%B4%E4%BD%93%E9%80%8F%E6%98%8E%E5%BA%A6" class="anchor text-muted"><i class="fas fa-hashtag"></i></a>
+</h4>
+<p>让某元素整体（包括内容）一起变透明</p>
+<p>属性名：opacity</p>
+<p>属性值：0～1之间的数字</p>
+<p>注意：会把里面所有的内容都变透明</p>
+</div>
+<div class="post-tail-wrapper text-muted">
+<div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href="/categories/blog/">blog</a>
+</div>
+<div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/web/" class="post-tag no-text-decoration">web</a>
+</div>
+<div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2">
+<div class="license-wrapper"> 本文由作者按照 <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> 进行授权</div>
+<div class="share-wrapper"> <span class="share-label text-muted mr-1">分享</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0+-+FZJ&amp;url=%2Fposts%2F%25E5%2589%258D%25E7%25AB%25AF%25E5%259F%25BA%25E7%25A1%2580%25E5%25AD%25A6%25E4%25B9%25A0%2F" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0+-+FZJ&amp;u=%2Fposts%2F%25E5%2589%258D%25E7%25AB%25AF%25E5%259F%25BA%25E7%25A1%2580%25E5%25AD%25A6%25E4%25B9%25A0%2F" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=%2Fposts%2F%25E5%2589%258D%25E7%25AB%25AF%25E5%259F%25BA%25E7%25A1%2580%25E5%25AD%25A6%25E4%25B9%25A0%2F&text=%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0+-+FZJ" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i id="copy-link" class="fa-fw fas fa-link small" data-toggle="tooltip" data-placement="top" title="分享链接" data-title-succeed="链接已复制！"> </i> </span>
+</div>
+</div>
+</div>
+</div></div>
+<div id="panel-wrapper" class="col-xl-3 pl-2 text-muted">
+<div class="access">
+<div id="access-lastmod" class="post">
+<div class="panel-heading">最近更新</div>
+<ul class="post-content pl-0 pb-1 ml-1 mt-2">
+<li><a href="/posts/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/">前端基础学习笔记</a></li>
+<li><a href="/posts/latex/">latex简单语法</a></li>
+<li><a href="/posts/deep-learning-01/">邱锡鹏《神经网络与深度学习》01</a></li>
+</ul>
+</div>
+<div id="access-tags">
+<div class="panel-heading">热门标签</div>
+<div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/tools/">tools</a> <a class="post-tag" href="/tags/cpp/">cpp</a> <a class="post-tag" href="/tags/deeplearning/">deeplearning</a> <a class="post-tag" href="/tags/life/">life</a> <a class="post-tag" href="/tags/web/">web</a>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5">
+<div class="panel-heading pl-3 pt-2 mb-2">文章内容</div>
+<nav id="toc" data-toggle="toc"></nav>
+</div>
+</div>
+</div>
+<div class="row"><div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 pl-3 pr-3 pr-xl-4 mt-5">
+<div id="related-posts" class="mb-2 mb-sm-4">
+<h3 class="pt-2 mb-4 ml-1" data-toc-skip>相关文章</h3>
+<div class="card-deck mb-4">
+<div class="card"> <a href="/posts/first-post/"><div class="card-body"> <em class="small" data-ts="1656720000" data-df="YYYY/MM/DD"> 2022/07/02 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>我的第一篇博文</h3>
+<div class="text-muted small"><p> 先尝试一下好不好用，用typora加上阿里云OSS图床和PicGo。 就先这样，没什么特别好写的。</p></div>
+</div></a>
+</div>
+<div class="card"> <a href="/posts/latex/"><div class="card-body"> <em class="small" data-ts="1656720000" data-df="YYYY/MM/DD"> 2022/07/02 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>latex简单语法</h3>
+<div class="text-muted small"><p> 主要面向于实战，因为要做深度学习的一些东西，写博文难免要写各种公式，所以在此简单总结一下，随时更新，遇到不会的再添加上去，主要服务于个人。 插入公式的两种方法 行内插入：比如在这句话里插入一个$\beta$，所用的语法是$\beta$ 插入块：所用的语法是$$\int_{a}^{b}f(x)$$ $$ \int_{a}^{b}f(x) $$ 相关具体语法 希腊字母 使...</p></div>
+</div></a>
+</div>
+<div class="card"> <a href="/posts/deep-learning-01/"><div class="card-body"> <em class="small" data-ts="1656806400" data-df="YYYY/MM/DD"> 2022/07/03 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>邱锡鹏《神经网络与深度学习》01</h3>
+<div class="text-muted small"><p> 此系列博客来源于邱锡鹏教授的《神经网络与深度学习》一书，在学习此书的同时，写一点东西加深记忆，同时也是为了夏令营做准备（老师的唯一指定复习书籍）。本书主要分为三个pt，机器学习基础、基础模型与进阶模型，后续将每章写一篇博文。 chapter1 绪论 深度学习实际上就是借助一个模型，该模型包含若干线性或非线性的组件，对模型的训练便是在改变各个组件的参数，调整它们的贡献度，即所谓的贡献度分配...</p></div>
+</div></a>
+</div>
+</div>
+</div>
+<div class="post-navigation d-flex justify-content-between"> <a href="/posts/CPP%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="btn btn-outline-primary" prompt="上一篇"><p>C++学习笔记</p></a><div class="btn btn-outline-primary disabled" prompt="下一篇"><p>-</p></div>
+</div>
+</div></div>
+</div>
+<div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content">
+<div id="search-hints"><div id="access-tags">
+<div class="panel-heading">热门标签</div>
+<div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/tools/">tools</a> <a class="post-tag" href="/tags/cpp/">cpp</a> <a class="post-tag" href="/tags/deeplearning/">deeplearning</a> <a class="post-tag" href="/tags/life/">life</a> <a class="post-tag" href="/tags/web/">web</a>
+</div>
+</div></div>
+<div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div>
+</div></div>
+</div>
+<footer><div class="container pl-lg-4 pr-lg-4"><div class="d-flex justify-content-between align-items-center text-muted ml-md-3 mr-md-3">
+<div class="footer-left"><p class="mb-0"> © 2022 <a href="https://twitter.com/username">FZJJJ</a>. <span data-toggle="tooltip" data-placement="top" title="除非另有说明，本网站上的博客文章均由作者按照知识共享署名 4.0 国际 (CC BY 4.0) 许可协议进行授权。">保留部分权利。</span></p></div>
+<div class="footer-right"><p class="mb-0"> 本站由 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 生成，采用 <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> 主题。</p></div>
+</div></div></footer><div id="mask"></div>
+<a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">搜索结果为空</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script src="https://cdn.jsdelivr.net/combine/npm/magnific-popup@1/dist/jquery.magnific-popup.min.js,npm/lozad/dist/lozad.min.js,npm/clipboard@2/dist/clipboard.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/dayjs@1/dayjs.min.js,npm/dayjs@1/locale/zh.min.js,npm/dayjs@1/plugin/relativeTime.min.js,npm/dayjs@1/plugin/localizedFormat.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.bundle.min.js"></script> <script defer src="/unregister.js"></script>
+</body>
+</html>
